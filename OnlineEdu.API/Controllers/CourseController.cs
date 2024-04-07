@@ -1,0 +1,47 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.BusniessLayer.Abstract;
+using OnlineEdu.DtoLayer.Dtos.CourseDtos;
+using OnlineEdu.EntityLayer.Entities;
+
+namespace OnlineEdu.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CourseController(IGenericService<Course> _genericService,IMapper _mapper) : ControllerBase
+    {
+        [HttpGet]
+        public async Task<IActionResult> CourseGettAll()
+        {
+            return Ok(_mapper.Map<List<ResultCourseDto>>(await _genericService.TGetAllAsync()));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdCourse(int id)
+        {
+            return Ok(_mapper.Map<ResultCourseDto>(await _genericService.TGetByIdAsync(id)));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCourse(CreateCourseDto createCourseDto)
+        {
+            await _genericService.TCreateAsync(_mapper.Map<Course>(createCourseDto));
+            return Ok("Course Alanı Başarıyla Eklenmiştir");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            await _genericService.TDeleteAsync(id);
+            return Ok("Course Alanı Başarıyla Silinmiştir");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCourse(UpdateCourseDto updateCourseDto)
+        {
+            await _genericService.TUpdateAsync(_mapper.Map<Course>(updateCourseDto));
+            return Ok("Course Alanı Başarıyla Güncellenmiştir");
+        }
+    }
+}

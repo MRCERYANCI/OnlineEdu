@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ValidationRules\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineEdu.DataAccessLayer\OnlineEdu.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\OnlineEdu.EntityLayer\OnlineEdu.EntityLayer.csproj" />
+  </ItemGroup>
+
+</Project>

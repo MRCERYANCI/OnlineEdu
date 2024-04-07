@@ -1,0 +1,47 @@
+﻿@model List<OnlineEdu.DtoLayer.Dtos.AboutDtos.ResultAboutDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Hakkımızda Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>                           
+                            <th scope="col">#</th>
+                            <th scope="col">Resim-1</th>
+                            <th scope="col">Resim-2</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Madde-1</th>
+                            <th scope="col">Madde-2</th>
+                            <th scope="col">Madde-3</th>
+                            <th scope="col">Madde-4</th>
+                            <th scope="col">Madde-4</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach(var Abouts in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

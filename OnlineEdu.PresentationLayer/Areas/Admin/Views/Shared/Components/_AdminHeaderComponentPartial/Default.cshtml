@@ -1,0 +1,27 @@
+﻿<header class="topbar" data-navbarbg="skin5">
+    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        @await Component.InvokeAsync("_AdminNavBarHeaderComponentPartial")
+
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+            @await Component.InvokeAsync("_AdminCreateNewComponentPartial")
+
+            <ul class="navbar-nav float-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-bell font-24"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+                @await Component.InvokeAsync("_AdminNotificationComponentPartial")
+
+                @await Component.InvokeAsync("_AdminMyAccountComponentPartial")
+            </ul>
+        </div>
+    </nav>
+</header>
