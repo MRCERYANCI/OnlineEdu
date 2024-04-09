@@ -1,0 +1,50 @@
+﻿@model UpdateAboutDto
+
+@{
+    ViewData["Title"] = "GetAbout";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">Yeni Hakkımızda Güncellem Alanı</h5>
+            <form method="post">
+                <div class="form-group m-t-20">
+                    <input asp-for="AboutId" type="hidden"/>
+                    <input asp-for="ImageUrl1" type="hidden"/>
+                    <input asp-for="ImageUrl2" type="hidden"/>
+                </div>
+                <div class="form-group m-t-20">
+                    <label>Madde-1<small class="text-muted"></small></label>
+                    <textarea asp-for="Item1" class="form-control date-inputmask" rows="6" placeholder="Lütfen Madde-1 Alanını Doldurunuz..."></textarea>
+                    <span asp-validation-for="Item1" class="text-danger"></span>
+                </div>
+                <div class="form-group m-t-20">
+                    <label>Madde-2<small class="text-muted"></small></label>
+                    <textarea asp-for="Item2" class="form-control date-inputmask" rows="6" placeholder="Lütfen Madde-2 Alanını Doldurunuz..."></textarea>
+                    <span asp-validation-for="Item2" class="text-danger"></span>
+                </div>
+                <div class="form-group m-t-20">
+                    <label>Madde-3<small class="text-muted"></small></label>
+                    <textarea asp-for="Item3" class="form-control date-inputmask" rows="6" placeholder="Lütfen Madde-3 Alanını Doldurunuz..."></textarea>
+                    <span asp-validation-for="Item3" class="text-danger"></span>
+                </div>
+                <div class="form-group m-t-20">
+                    <label>Madde-4<small class="text-muted"></small></label>
+                    <textarea asp-for="Item4" class="form-control date-inputmask" rows="6" placeholder="Lütfen Madde-4 Alanını Doldurunuz..."></textarea>
+                    <span asp-validation-for="Item4" class="text-danger"></span>
+                </div>
+                <div class="form-group m-t-20">
+                    <label>Açıklama<small class="text-muted"></small></label>
+                    <textarea asp-for="Description" class="form-control date-inputmask" rows="10" placeholder="Lütfen Açıklama Alanını Doldurunuz..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group m-t-20">
+                    <button class="btn btn-success btl-lg">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,4 +1,4 @@
-﻿@model List<OnlineEdu.DtoLayer.Dtos.AboutDtos.ResultAboutDto>
+﻿@model List<ResultAboutDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -26,7 +26,6 @@
                             <th scope="col">Madde-2</th>
                             <th scope="col">Madde-3</th>
                             <th scope="col">Madde-4</th>
-                            <th scope="col">Madde-4</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -37,11 +36,23 @@
 
                             <tr>
                                 <td>@Count</td>
+                                <td><img src="@Abouts.ImageUrl1" style="height:75px;width:75px;"/></td>
+                                <td><img src="@Abouts.ImageUrl2" style="height:75px;width:75px;"/></td>
+                                <td>@Abouts.Description</td>
+                                <td>@Abouts.Item1</td>
+                                <td>@Abouts.Item2</td>
+                                <td>@Abouts.Item3</td>
+                                <td>@Abouts.Item4</td>
+                                <td>
+                                    <a asp-action="DeleteAbout" asp-controller="About" asp-area="Admin" asp-route-id="@Abouts.AboutId" class="btn btn-outline-danger">Sil</a>
+                                    <a asp-action="GetAbout" asp-controller="About" asp-area="Admin" asp-route-id="@Abouts.AboutId" class="btn btn-outline-danger">Güncelle</a>
+                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
+        <a asp-action="CreateAbout" asp-controller="About" asp-area="Admin" class="btn btn-outline-primary">Yeni Hakkımızda</a>
     </div>
 </div>
