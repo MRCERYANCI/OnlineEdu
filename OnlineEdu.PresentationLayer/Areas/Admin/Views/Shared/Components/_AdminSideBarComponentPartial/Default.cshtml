@@ -2,7 +2,18 @@
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
             <ul id="sidebarnav" class="p-t-30">
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Admin/About/Index" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Hakkımızda</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="About" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-format-list-bulleted"></i><span class="hide-menu">Hakkımızda</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Banner" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-folder-multiple-image"></i><span class="hide-menu">Banner</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="BlogCategory" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-format-list-bulleted-type"></i><span class="hide-menu">Blog Kategori</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Blog" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-blogger"></i><span class="hide-menu">Bloglar</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Contact" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-cellphone"></i><span class="hide-menu">İletişim</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="CourseCategory" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-playlist-play"></i><span class="hide-menu">Kurs Kategorileri</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Course" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-monitor"></i><span class="hide-menu">Kurslar</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Comment" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-comment-multiple-outline"></i><span class="hide-menu">Mesajlar</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="SocialMedia" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-facebook-box"></i><span class="hide-menu">Sosyal Medyalar</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Subscriber" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Aboneler</span></a></li>
+                <li class="sidebar-item"> <a asp-action="Index" asp-controller="Testimonial" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-format-quote"></i><span class="hide-menu">Referanslar</span></a></li>
+                <li class="sidebar-item"> <a asp-action="LogOut" asp-controller="Account" asp-area="Admin" class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false"><i class="mdi mdi-import"></i><span class="hide-menu">Çıkış Yap</span></a></li>
             </ul>
         </nav>
 
