@@ -12,7 +12,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\Images\AboutImages\" />
     <Folder Include="wwwroot\Images\BannerImages\" />
-    <Folder Include="wwwroot\Vitrin Temaları\" />
   </ItemGroup>
 
   <ItemGroup>

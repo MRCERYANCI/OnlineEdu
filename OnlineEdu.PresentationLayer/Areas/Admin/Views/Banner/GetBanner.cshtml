@@ -1,8 +1,32 @@
-﻿
+﻿@model UpdateBannerDto
+
 @{
     ViewData["Title"] = "GetBanner";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>GetBanner</h1>
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title m-b-0">Banner Güncelleme Alanı</h5>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group m-t-20">
+                    <input type="hidden" class="form-control date-inputmask"  asp-for="BannerId">
+                    <input type="hidden" class="form-control date-inputmask"  asp-for="ImageUrl">
+                </div>
+
+                <div class="form-group m-t-20">
+                    <label>Başlık Alanı<small class="text-muted"></small></label>
+                    <input type="text" class="form-control date-inputmask" id="date-mask" asp-for="Title">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group m-t-20">
+                    <button class="btn btn-success btl-lg">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 

@@ -61,7 +61,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBanner(CreateBannerDto createBannerDto)
+        public async Task<IActionResult> CreateBanner(CreateBannerDto createBannerDto,IFormFile Image)
         {
             try
             {
@@ -71,12 +71,12 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 ValidationResult validationResult = validationRules.Validate(_mapper.Map<Banner>(createBannerDto));
                 if (validationResult.IsValid)
                 {
-                    if (createBannerDto.Image != null)
+                    if (Image != null)
                     {
                         var newImageName = Guid.NewGuid() + ".webp";
                         var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/BannerImages/", newImageName);
                         var stream = new FileStream(location, FileMode.Create);
-                        createBannerDto.Image.CopyTo(stream);
+                        Image.CopyTo(stream);
                         createBannerDto.ImageUrl = "/Images/BannerImages/" + newImageName;
 
                         await _httpClientFactory.PostAsJsonAsync("Banners", createBannerDto);
@@ -86,8 +86,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 }
                 else
                 {
-                    TempData["Controller"] = "Hakkımızda";
-                    TempData["Action"] = "Hakkımızda Ekleme Alanı";
+                    TempData["Controller"] = "Banner";
+                    TempData["Action"] = "Banner Ekleme Alanı";
 
                     validationResult.Errors.ForEach(x =>
                     {
