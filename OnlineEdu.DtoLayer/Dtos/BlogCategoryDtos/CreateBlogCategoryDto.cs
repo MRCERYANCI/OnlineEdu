@@ -9,6 +9,6 @@ namespace OnlineEdu.DtoLayer.Dtos.BlogCategoryDtos
     public class CreateBlogCategoryDto
     {
         public string Name { get; set; }
-        public bool status { get; set; }
+        public bool Status { get; set; }
     }
 }
