@@ -11,6 +11,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="wwwroot\Images\AboutImages\" />
+    <Folder Include="wwwroot\Images\BannerImages\" />
     <Folder Include="wwwroot\Vitrin Temaları\" />
   </ItemGroup>
 
@@ -21,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineEdu.BusniessLayer\OnlineEdu.BusniessLayer.csproj" />
+    <ProjectReference Include="..\OnlineEdu.BusniessLayer\OnlineEdu.BusinessLayer.csproj" />
     <ProjectReference Include="..\OnlineEdu.DtoLayer\OnlineEdu.DtoLayer.csproj" />
     <ProjectReference Include="..\OnlineEdu.EntityLayer\OnlineEdu.EntityLayer.csproj" />
   </ItemGroup>

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineEdu.BusniessLayer\OnlineEdu.BusniessLayer.csproj" />
+    <ProjectReference Include="..\OnlineEdu.BusniessLayer\OnlineEdu.BusinessLayer.csproj" />
     <ProjectReference Include="..\OnlineEdu.DtoLayer\OnlineEdu.DtoLayer.csproj" />
   </ItemGroup>
 

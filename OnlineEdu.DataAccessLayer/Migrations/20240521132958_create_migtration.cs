@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OnlineEdu.DataAccessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class craete_migration : Migration
+    public partial class create_migtration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

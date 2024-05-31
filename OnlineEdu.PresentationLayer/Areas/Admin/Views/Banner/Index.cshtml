@@ -1,0 +1,49 @@
+﻿@model List<ResultBannerDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Banner Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Başlık</th>
+                            <th scope="col">Görsel</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach (var Banners in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                                <td>@Banners.Title</td>
+                                <td><img src="@Banners.ImageUrl" style="height:75px;width:75px;" /></td>      
+                                <td>
+                                    <a asp-action="DeleteBanner" asp-controller="Banner" asp-area="Admin" asp-route-id="@Banners.BannerId" class="btn btn-outline-danger">Sil</a>
+                                    <a asp-action="GetBanner" asp-controller="Banner" asp-area="Admin" asp-route-id="@Banners.BannerId" class="btn btn-outline-danger">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a asp-action="CreateBanner" asp-controller="Banner" asp-area="Admin" class="btn btn-outline-primary">Yeni Banner</a>
+    </div>
+</div>
+
+

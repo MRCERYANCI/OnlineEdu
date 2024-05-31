@@ -12,8 +12,8 @@ using OnlineEdu.DataAccessLayer.Concrete;
 namespace OnlineEdu.DataAccessLayer.Migrations
 {
     [DbContext(typeof(OnlineEduContext))]
-    [Migration("20240407084321_craete_migration")]
-    partial class craete_migration
+    [Migration("20240521132958_create_migtration")]
+    partial class create_migtration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
