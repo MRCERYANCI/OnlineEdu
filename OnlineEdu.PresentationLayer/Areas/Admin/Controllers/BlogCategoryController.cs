@@ -128,7 +128,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 
                 if (validationResult.IsValid)
                 {
-                    await _httpClientFactory.PutAsJsonAsync("BlogCategorys", updateBlogCategoryDto);
+                    await _httpClientFactory.PutAsJsonAsync("BlogCategories", updateBlogCategoryDto);
                     return RedirectToAction(nameof(Index));
                 }
                 else
