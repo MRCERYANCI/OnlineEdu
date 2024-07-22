@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSOD Screen</title>
+    <style>
+        body {
+            background-color: #0078d7;
+            color: white;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: left;
+            padding-left: 5%;
+        }
+
+        .container {
+            max-width: 1400px;
+            padding: 20px;
+            margin-bottom: 10%;
+        }
+
+        .sad-face {
+            font-size: 200px; /* Artırıldı */
+            margin-bottom: 20px;
+        }
+
+        .main-text {
+            font-size: 32px; /* Artırıldı */
+            margin-bottom: 20px;
+        }
+
+        .percentage {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+
+        .info-text {
+            font-size: 14px;
+        }
+
+        .stop-code {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sad-face">:(</div>
+        <div class="main-text">@ViewBag.Message</div>
+        <div class="percentage">85% complete</div>
+        <div class="info-text">
+            <p>For more information about this issue and possible fixes, visit our website.</p>
+            <p>If you call a support person, give them this info:</p>
+            <p class="stop-code">Stop code: 0x00000000</p>
+        </div>
+    </div>
+</body>
+</html>

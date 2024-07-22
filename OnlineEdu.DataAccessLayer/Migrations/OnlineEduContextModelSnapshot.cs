@@ -60,7 +60,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("AboutId");
 
-                    b.ToTable("Abouts");
+                    b.ToTable("Abouts", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Banner", b =>
@@ -81,7 +81,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("BannerId");
 
-                    b.ToTable("Banners");
+                    b.ToTable("Banners", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Blog", b =>
@@ -117,7 +117,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasIndex("BlogCategoryId");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blogs", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.BlogCategory", b =>
@@ -137,7 +137,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("BlogCategoryId");
 
-                    b.ToTable("BlogCategories");
+                    b.ToTable("BlogCategories", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Contact", b =>
@@ -169,7 +169,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("ContactId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Course", b =>
@@ -204,7 +204,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasIndex("CourseCategoryId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.CourseCategory", b =>
@@ -232,7 +232,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("CourseCategoryId");
 
-                    b.ToTable("CourseCategories");
+                    b.ToTable("CourseCategories", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Message", b =>
@@ -272,7 +272,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("MessageId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.SocialMedia", b =>
@@ -303,7 +303,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("SocialMediaId");
 
-                    b.ToTable("SocialMedias");
+                    b.ToTable("SocialMedias", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Subscriber", b =>
@@ -326,7 +326,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("SubscriberId");
 
-                    b.ToTable("Subscribers");
+                    b.ToTable("Subscribers", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Testimonial", b =>
@@ -358,7 +358,7 @@ namespace OnlineEdu.DataAccessLayer.Migrations
 
                     b.HasKey("TestimonialId");
 
-                    b.ToTable("Testimonials");
+                    b.ToTable("Testimonials", (string)null);
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Blog", b =>
