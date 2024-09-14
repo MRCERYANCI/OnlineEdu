@@ -6,6 +6,7 @@ using OnlineEdu.DtoLayer.Dtos.AboutDtos;
 using OnlineEdu.DtoLayer.Dtos.BannerDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
+using OnlineEdu.PresentationLayer.Services;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
@@ -73,11 +74,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 {
                     if (Image != null)
                     {
-                        var newImageName = Guid.NewGuid() + ".webp";
-                        var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/BannerImages/", newImageName);
-                        var stream = new FileStream(location, FileMode.Create);
-                        Image.CopyTo(stream);
-                        createBannerDto.ImageUrl = "/Images/BannerImages/" + newImageName;
+                        createBannerDto.ImageUrl = FileService.FileSaveToServer(Image, "wwwroot/Images/BannerImages/");
 
                         await _httpClientFactory.PostAsJsonAsync("Banners", createBannerDto);
 

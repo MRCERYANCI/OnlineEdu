@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.BusinessLayer.Abstract;
 using OnlineEdu.BusniessLayer.Abstract;
 using OnlineEdu.DtoLayer.Dtos.BlogDtos;
 using OnlineEdu.EntityLayer.Entities;
@@ -9,12 +10,12 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController(IGenericService<Blog> _genericService, IMapper _mapper) : ControllerBase
+    public class BlogsController(IBlogService _genericService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> BlogGettAll()
         {
-            return Ok(_mapper.Map<List<ResultBlogDto>>(await _genericService.TGetAllAsync()));
+            return Ok(_mapper.Map<List<ResultBlogDto>>(await _genericService.TListBlogsWithCategories()));
         }
 
         [HttpGet("{id}")]

@@ -1,0 +1,47 @@
+﻿@model UpdateBlogDto
+
+@{
+    ViewData["Title"] = "GetBlog";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Blog Güncelleme Sayfası</h5>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group m-t-20">
+                        <img src="~/Images/BlogImages/@Model.ImageUrl" style="width:830px;height:200px;border-radius:5px;" />
+                    </div>
+                    <div class="form-group m-t-20">
+                        <label>Blog Başlığı <small class="text-muted"></small></label>
+                        <input type="hidden" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Blog Başlığını Giriniz." asp-for="BlogId">
+                        <input type="text" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Blog Başlığını Giriniz." asp-for="Title">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Blog Kategorisi <small class="text-muted"></small></label>
+                        <select asp-items="@ViewBag.CategoryList" asp-for="BlogCategoryId" class="form-control">
+                            <option>Kategori Seçiniz</option>
+                        </select>
+                        <span asp-validation-for="BlogCategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Blog Resmi <small class="text-muted"></small></label>
+                        <input type="file" class="form-control international-inputmask" id="international-mask" name="fileName">
+                    </div>
+                    <div class="form-group">
+                        <label>Blog Metni <small class="text-muted"></small></label>
+                        <textarea type="text" asp-for="Content" rows="10" class="form-control international-inputmask" placeholder="Lütfen Blog İçeriğini Giriniz."></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

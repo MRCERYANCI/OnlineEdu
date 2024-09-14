@@ -15,7 +15,6 @@ namespace OnlineEdu.BusinessLayer.ValidationRules.BlogRules
             RuleFor(x => x.Title).NotEmpty().WithMessage("Bu Alan Zorunludur");
             RuleFor(x => x.Content).NotEmpty().WithMessage("Bu Alan Zorunludur");
             RuleFor(x => x.CreatedDate).NotEmpty().WithMessage("Bu Alan Zorunludur");
-            RuleFor(x => x.Status).NotEmpty().WithMessage("Bu Alan Zorunludur");
             RuleFor(x => x.BlogCategoryId).NotEmpty().WithMessage("Bu Alan Zorunludur");
         }
     }

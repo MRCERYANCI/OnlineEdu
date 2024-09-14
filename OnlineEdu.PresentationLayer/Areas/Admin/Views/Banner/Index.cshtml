@@ -31,7 +31,7 @@
                             <tr>
                                 <td>@Count</td>
                                 <td>@Banners.Title</td>
-                                <td><img src="@Banners.ImageUrl" style="height:75px;width:75px;" /></td>      
+                                <td><img src="/Images/BannerImages/@Banners.ImageUrl" style="height:75px;width:75px;" /></td>
                                 <td>
                                     <a asp-action="DeleteBanner" asp-controller="Banner" asp-area="Admin" asp-route-id="@Banners.BannerId" class="btn btn-outline-danger">Sil</a>
                                     <a asp-action="GetBanner" asp-controller="Banner" asp-area="Admin" asp-route-id="@Banners.BannerId" class="btn btn-outline-warning">Güncelle</a>

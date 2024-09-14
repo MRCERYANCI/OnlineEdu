@@ -89,6 +89,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                     TempData["Controller"] = "Blog";
                     TempData["Action"] = "Blog Ekleme Alanı";
 
+                    await CategoryDropdown();
+
                     validationResult.Errors.ForEach(x =>
                     {
                         ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
@@ -114,6 +116,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 var values = await _httpClientFactory.GetFromJsonAsync<UpdateBlogDto>($"Blogs/{id}");
                 if (values != null)
                 {
+                    await CategoryDropdown();
                     return View(values);
                 }
                 else
@@ -168,7 +171,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 
         public async Task CategoryDropdown()
         {
-            var categoryList = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogCategoryDto>>("Categories");
+            var categoryList = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogCategoryDto>>("BlogCategories");
             if (categoryList is not null)
             {
                 List<SelectListItem> categorySelectListItems = (from x in categoryList

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineEdu.DtoLayer.Dtos.BlogCategoryDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace OnlineEdu.DtoLayer.Dtos.BlogDtos
         public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Status { get; set; }
-
         public int BlogCategoryId { get; set; }
+        public ResultBlogCategoryDto BlogCategory { get; set; }
     }
 }

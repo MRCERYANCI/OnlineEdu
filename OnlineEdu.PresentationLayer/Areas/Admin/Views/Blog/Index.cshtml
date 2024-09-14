@@ -1,0 +1,76 @@
+﻿@model List<ResultBlogDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Blog Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Blog Resmi</th>
+                            <th scope="col">Blog Başlığı</th>
+                            <th scope="col">Blog Kategori</th>
+                            <th scope="col">Blog Tarihi</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach (var Blogs in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                                <td><img src="~/Images/BlogImages/@Blogs.ImageUrl" style="width:130px;height:100px;border-radius:5px;" /></td>
+                                <td>@Blogs.Title</td>
+                                <td>@Blogs.BlogCategory.Name</td>
+                                <td>@(((DateTime)Blogs.CreatedDate).ToString("dd MMMM yyyy"))</td>
+                                <td>
+                                    <button onclick="DeletedBlogCategory(this)" data-blog-id="@Blogs.BlogId" data-blog-title="@Blogs.Title" class="btn btn-outline-danger">Sil</button>
+                                    <a asp-action="GetBlog" data-blogcategory-id="@Blogs.BlogId" asp-controller="Blog" asp-area="Admin" asp-route-id="@Blogs.BlogId" class="btn btn-outline-warning">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a asp-action="CreateBlog" asp-controller="Blog" asp-area="Admin" class="btn btn-outline-primary">Yeni Blog</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    function DeletedBlogCategory(button) {
+        var id = button.getAttribute("data-blog-id");
+        var Metin = button.getAttribute("data-blog-title");
+
+        Swal.fire({
+            title: Metin + " Bloğ'u Silmek İstediğinize Emin misiniz?",
+            text: "Bu işlemi geri alamazsın!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+            cancelButtonText: "Hayır, Silme!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://localhost:7046/Admin/Blog/DeleteBlog/" + id;
+            }
+        });
+    }
+</script>
