@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using OnlineEdu.BusinessLayer.ValidationRules.BannerRules;
-using OnlineEdu.DtoLayer.Dtos.BannerDtos;
+using OnlineEdu.BusinessLayer.ValidationRules.ContactRules;
+using OnlineEdu.DtoLayer.Dtos.ContactDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
 using OnlineEdu.PresentationLayer.Services;
@@ -11,7 +11,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class BannerController(IMapper _mapper) : Controller
+    public class ContactController(IMapper _mapper) : Controller
     {
         private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
 
@@ -19,10 +19,10 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         {
             try
             {
-                TempData["Controller"] = "Banner";
-                TempData["Action"] = "Banner Listesi";
+                TempData["Controller"] = "Contact";
+                TempData["Action"] = "Contact Listesi";
 
-                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultBannerDto>>("Banners");
+                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultContactDto>>("Contacts");
                 return View(values);
             }
             catch (Exception ex)
@@ -31,7 +31,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> DeleteBanner(int id)
+        public async Task<IActionResult> DeleteContact(int id)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 }
                 else
                 {
-                    await _httpClientFactory.DeleteAsync($"Banners/{id}");
+                    await _httpClientFactory.DeleteAsync($"Contacts/{id}");
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -52,38 +52,36 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateBanner()
+        public IActionResult CreateContact()
         {
-            TempData["Controller"] = "Banner";
-            TempData["Action"] = "Banner Ekleme Alanı";
+            TempData["Controller"] = "Contact";
+            TempData["Action"] = "Contact Ekleme Alanı";
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBanner(CreateBannerDto createBannerDto,IFormFile Image)
+        public async Task<IActionResult> CreateContact(CreateContactDto createContactDto, IFormFile Image)
         {
             try
             {
                 ModelState.Clear();
 
-                BannerValidator validationRules = new BannerValidator();
-                ValidationResult validationResult = validationRules.Validate(_mapper.Map<Banner>(createBannerDto));
+                ContactValidator validationRules = new ContactValidator();
+                ValidationResult validationResult = validationRules.Validate(_mapper.Map<Contact>(createContactDto));
                 if (validationResult.IsValid)
                 {
-                    if (Image != null)
-                    {
-                        createBannerDto.ImageUrl = FileService.FileSaveToServer(Image, "wwwroot/Images/BannerImages/");
 
-                        await _httpClientFactory.PostAsJsonAsync("Banners", createBannerDto);
 
-                        return RedirectToAction(nameof(Index));
-                    }
+                    await _httpClientFactory.PostAsJsonAsync("Contacts", createContactDto);
+
+                    return RedirectToAction(nameof(Index));
+
                 }
                 else
                 {
-                    TempData["Controller"] = "Banner";
-                    TempData["Action"] = "Banner Ekleme Alanı";
+                    TempData["Controller"] = "Contact";
+                    TempData["Action"] = "Contact Ekleme Alanı";
 
                     validationResult.Errors.ForEach(x =>
                     {
@@ -100,14 +98,14 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBanner(int id)
+        public async Task<IActionResult> GetContact(int id)
         {
             try
             {
-                TempData["Controller"] = "Banner";
-                TempData["Action"] = "Banner Güncelleme Alanı";
+                TempData["Controller"] = "Contact";
+                TempData["Action"] = "Contact Güncelleme Alanı";
 
-                var values = await _httpClientFactory.GetFromJsonAsync<UpdateBannerDto>($"Banners/{id}");
+                var values = await _httpClientFactory.GetFromJsonAsync<UpdateContactDto>($"Contacts/{id}");
                 if (values != null)
                 {
                     return View(values);
@@ -122,27 +120,27 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetBanner(UpdateBannerDto updateBannerDto)
+        public async Task<IActionResult> GetContact(UpdateContactDto updateContactDto)
         {
             try
             {
                 ModelState.Clear();
 
-                BannerValidator validationRules = new BannerValidator();
-                ValidationResult validationResult = validationRules.Validate(_mapper.Map<Banner>(updateBannerDto));
+                ContactValidator validationRules = new ContactValidator();
+                ValidationResult validationResult = validationRules.Validate(_mapper.Map<Contact>(updateContactDto));
 
                 if (validationResult.IsValid)
                 {
-                    await _httpClientFactory.PutAsJsonAsync("Banners", updateBannerDto);
+                    await _httpClientFactory.PutAsJsonAsync("Contacts", updateContactDto);
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    var values = await _httpClientFactory.GetFromJsonAsync<UpdateBannerDto>($"Banners/{updateBannerDto.BannerId}");
+                    var values = await _httpClientFactory.GetFromJsonAsync<UpdateContactDto>($"Contacts/{updateContactDto.ContactId}");
                     if (values != null)
                     {
-                        TempData["Controller"] = "Banner";
-                        TempData["Action"] = "Banner Güncelleme Alanı";
+                        TempData["Controller"] = "Contact";
+                        TempData["Action"] = "Contact Güncelleme Alanı";
 
                         validationResult.Errors.ForEach(x =>
                         {
@@ -152,7 +150,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                         return View(values);
                     }
                     else
-                        return StatusCode(400, $"Sunucuda {updateBannerDto.BannerId} Numaralı Id'ye Göre Veri Bulunamadı");
+                        return StatusCode(400, $"Sunucuda {updateContactDto.ContactId} Numaralı Id'ye Göre Veri Bulunamadı");
                 }
             }
             catch (Exception ex)

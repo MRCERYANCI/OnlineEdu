@@ -1,0 +1,73 @@
+﻿@model List<ResultContactDto>
+
+@{
+    ViewData["Title"] = "İletişim Alanı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">İletişim Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Adres</th>
+                            <th scope="col">Telefon</th>
+                            <th scope="col">Mail</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach (var Contacts in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                                <td>@Contacts.Address</td>
+                                <td>@Contacts.Phone</td>
+                                <td>@Contacts.Email</td>
+                                <td>
+                                    <button onclick="DeletedContact(this)" data-blog-id="@Contacts.ContactId" class="btn btn-outline-danger">Sil</button>
+                                    <a asp-action="GetContact" data-blogcategory-id="@Contacts.ContactId" asp-controller="Contact" asp-area="Admin" asp-route-id="@Contacts.ContactId" class="btn btn-outline-warning">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a asp-action="CreateContact" asp-controller="Contact" asp-area="Admin" class="btn btn-outline-primary">Yeni İletişim</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    function DeletedContact(button) {
+        var id = button.getAttribute("data-blog-id");
+
+        Swal.fire({
+            title: id + " No'lu İletişimi Silmek İstediğinize Emin misiniz?",
+            text: "Bu işlemi geri alamazsın!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+            cancelButtonText: "Hayır, Silme!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://localhost:7046/Admin/Contact/DeleteContact/" + id;
+            }
+        });
+    }
+</script>
+

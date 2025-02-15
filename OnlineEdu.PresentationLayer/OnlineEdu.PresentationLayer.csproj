@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\Admin Temaları\matrix-admin-master\assets\libs\inputmask\dist\inputmask\dependencyLibs\" />
     <Folder Include="wwwroot\Images\AboutImages\" />
     <Folder Include="wwwroot\Images\BannerImages\" />
     <Folder Include="wwwroot\Images\BlogImages\" />
@@ -17,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>

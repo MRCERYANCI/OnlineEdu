@@ -1,0 +1,45 @@
+﻿@model UpdateContactDto
+
+@{
+    ViewData["Title"] = "İletişim Güncelleme Alanı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">İletişim Güncelleme Sayfası</h5>
+                <form method="post">
+                    <div class="form-group m-t-20">
+                        <input type="hidden" asp-for="ContactId">                     
+                    </div>
+                    <div class="form-group m-t-20">
+                        <label>İletişim Maili <small class="text-muted"></small></label>
+                        <input type="email" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen İletişim Mailini Giriniz" asp-for="Email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group m-t-20">
+                        <label>İletişim Telefon Numarası <small class="text-muted"></small></label>
+                        <input type="text" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen İletişim Telefounu Giriniz" asp-for="Phone">
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group m-t-20">
+                        <label>İletişim Map Haritası <small class="text-muted"></small></label>
+                        <input type="url" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen İletişim Map Url Giriniz" asp-for="MapUrl">
+                        <span asp-validation-for="MapUrl" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>İletişim Adresi <small class="text-muted"></small></label>
+                        <textarea type="text" asp-for="Address" rows="10" class="form-control international-inputmask" placeholder="Lütfen İletişim Adresini Giriniz."></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
