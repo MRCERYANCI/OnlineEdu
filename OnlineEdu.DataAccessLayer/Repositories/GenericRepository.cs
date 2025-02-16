@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace OnlineEdu.DataAccessLayer.Repositories
 {
-    public class GenericRepository<T>(OnlineEduContext _onlineEduContext) : IGenericDal<T> where T : class
+    public class GenericRepository<T> : IGenericDal<T> where T : class
     {
+        protected readonly OnlineEduContext _onlineEduContext;
+
+        public GenericRepository(OnlineEduContext onlineEduContext)
+        {
+            _onlineEduContext = onlineEduContext;
+        }
+
         public DbSet<T> Table { get => _onlineEduContext.Set<T>();}
 
         public async Task<int> CountAsync()

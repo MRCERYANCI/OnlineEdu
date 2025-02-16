@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using OnlineEdu.BusinessLayer.ValidationRules.ContactRules;
-using OnlineEdu.DtoLayer.Dtos.ContactDtos;
+using OnlineEdu.BusinessLayer.ValidationRules.CourseCategoryRules;
+using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
-using OnlineEdu.PresentationLayer.Services;
+using System.Net.Http;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class ContactController(IMapper _mapper) : Controller
+    public class CourseCategoryController(IMapper _mapper) : Controller
     {
         private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
 
@@ -19,10 +19,10 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         {
             try
             {
-                TempData["Controller"] = "Contact";
-                TempData["Action"] = "Contact Listesi";
+                TempData["Controller"] = "Kurs Kategorileri";
+                TempData["Action"] = "Kurs Kategori Listesi";
 
-                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultContactDto>>("Contacts");
+                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseCategoryDto>>("CourseCategories");
                 return View(values);
             }
             catch (Exception ex)
@@ -31,7 +31,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
-        public async Task<IActionResult> DeleteContact(int id)
+        public async Task<IActionResult> DeleteCourseCategory(int id)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 }
                 else
                 {
-                    await _httpClientFactory.DeleteAsync($"Contacts/{id}");
+                    await _httpClientFactory.DeleteAsync($"CourseCategories/{id}");
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -52,36 +52,36 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateContact()
+        public IActionResult CreateCourseCategory()
         {
-            TempData["Controller"] = "Contact";
-            TempData["Action"] = "Contact Ekleme Alanı";
+            TempData["Controller"] = "Kurs Kategorileri";
+            TempData["Action"] = "Kurs Kategorisi Ekleme Alanı";
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateContact(CreateContactDto createContactDto)
+        public async Task<IActionResult> CreateCourseCategory(CreateCourseCategoryDto createCourseCategoryDto)
         {
             try
             {
                 ModelState.Clear();
 
-                ContactValidator validationRules = new ContactValidator();
-                ValidationResult validationResult = validationRules.Validate(_mapper.Map<Contact>(createContactDto));
+                CourseCategoryValidator validationRules = new CourseCategoryValidator();
+                ValidationResult validationResult = validationRules.Validate(_mapper.Map<CourseCategory>(createCourseCategoryDto));
                 if (validationResult.IsValid)
                 {
 
 
-                    await _httpClientFactory.PostAsJsonAsync("Contacts", createContactDto);
+                    await _httpClientFactory.PostAsJsonAsync("CourseCategories", createCourseCategoryDto);
 
                     return RedirectToAction(nameof(Index));
 
                 }
                 else
                 {
-                    TempData["Controller"] = "Contact";
-                    TempData["Action"] = "Contact Ekleme Alanı";
+                    TempData["Controller"] = "Kurs Kategorileri";
+                    TempData["Action"] = "Kurs Kategorisi Ekleme Alanı";
 
                     validationResult.Errors.ForEach(x =>
                     {
@@ -98,14 +98,14 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetContact(int id)
+        public async Task<IActionResult> GetCourseCategory(int id)
         {
             try
             {
-                TempData["Controller"] = "Contact";
-                TempData["Action"] = "Contact Güncelleme Alanı";
+                TempData["Controller"] = "Kurs Kategorileri";
+                TempData["Action"] = "Kurs Kategorisi Güncelleme Alanı";
 
-                var values = await _httpClientFactory.GetFromJsonAsync<UpdateContactDto>($"Contacts/{id}");
+                var values = await _httpClientFactory.GetFromJsonAsync<UpdateCourseCategoryDto>($"CourseCategories/{id}");
                 if (values != null)
                 {
                     return View(values);
@@ -120,27 +120,27 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetContact(UpdateContactDto updateContactDto)
+        public async Task<IActionResult> GetCourseCategory(UpdateCourseCategoryDto updateCourseCategoryDto)
         {
             try
             {
                 ModelState.Clear();
 
-                ContactValidator validationRules = new ContactValidator();
-                ValidationResult validationResult = validationRules.Validate(_mapper.Map<Contact>(updateContactDto));
+                CourseCategoryValidator validationRules = new CourseCategoryValidator();
+                ValidationResult validationResult = validationRules.Validate(_mapper.Map<CourseCategory>(updateCourseCategoryDto));
 
                 if (validationResult.IsValid)
                 {
-                    await _httpClientFactory.PutAsJsonAsync("Contacts", updateContactDto);
+                    await _httpClientFactory.PutAsJsonAsync("CourseCategories", updateCourseCategoryDto);
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
-                    var values = await _httpClientFactory.GetFromJsonAsync<UpdateContactDto>($"Contacts/{updateContactDto.ContactId}");
+                    var values = await _httpClientFactory.GetFromJsonAsync<UpdateCourseCategoryDto>($"CourseCategories/{updateCourseCategoryDto.CourseCategoryId}");
                     if (values != null)
                     {
-                        TempData["Controller"] = "Contact";
-                        TempData["Action"] = "Contact Güncelleme Alanı";
+                        TempData["Controller"] = "Kurs Kategorileri";
+                        TempData["Action"] = "Kurs Kategorisi Güncelleme Alanı";
 
                         validationResult.Errors.ForEach(x =>
                         {
@@ -150,7 +150,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                         return View(values);
                     }
                     else
-                        return StatusCode(400, $"Sunucuda {updateContactDto.ContactId} Numaralı Id'ye Göre Veri Bulunamadı");
+                        return StatusCode(400, $"Sunucuda {updateCourseCategoryDto.CourseCategoryId} Numaralı Id'ye Göre Veri Bulunamadı");
                 }
             }
             catch (Exception ex)

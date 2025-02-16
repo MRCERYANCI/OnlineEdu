@@ -1,0 +1,86 @@
+﻿@model List<ResultCourseCategoryDto>
+
+@{
+    ViewData["Title"] = "Kurs Kategori Listesi";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Kurs Kategorisi Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Kurs Kategori Adı</th>
+                            <th scope="col">Kategori Açıklaması</th>
+                            <th scope="col">Kategori Durumu</th>
+                            <th scope="col"></th>
+                            <th scope="col">Ana Sayfa Durumu</th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach (var CourseCategories in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                                <td>@CourseCategories.CourseCategoryName</td>
+                                <td>@CourseCategories.Description</td>
+                                <td>@(CourseCategories.ShowCase ? "Gösteriliyor" : "Gösterilmiyor")</td>
+                                <td>
+                                    <button onclick="DeletedCourseCategory(this)" data-course-category-id="@CourseCategories.CourseCategoryId" data-course-category-title="@CourseCategories.CourseCategoryName" class="btn btn-outline-danger">Sil</button>
+                                    <a asp-action="GetCourseCategory" asp-controller="CourseCategory" asp-area="Admin" asp-route-id="@CourseCategories.CourseCategoryId" class="btn btn-outline-warning">Güncelle</a>
+                                </td>
+                                <td>
+                                    @if (CourseCategories.ShowCase)
+                                    {
+                                        <a asp-action="" asp-controller="CourseCategory" asp-area="Admin" asp-route-id="@CourseCategories.CourseCategoryId" class="btn btn-outline-secondary">Gösterme</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="" asp-controller="CourseCategory" asp-area="Admin" asp-route-id="@CourseCategories.CourseCategoryId" class="btn btn-outline-success">Göster</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a asp-action="CreateCourseCategory" asp-controller="CourseCategory" asp-area="Admin" class="btn btn-outline-primary">Yeni Kurs Kategorisi</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    function DeletedCourseCategory(button) {
+        var id = button.getAttribute("data-course-category-id");
+        var Metin = button.getAttribute("data-course-category-title");
+
+        Swal.fire({
+            title: Metin + " Kurs Kategorisini Silmek İstediğinize Emin misiniz?",
+            text: "Bu işlemi geri alamazsın!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+            cancelButtonText: "Hayır, Silme!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://localhost:7046/Admin/CourseCategory/DeleteCourseCategory/" + id;
+            }
+        });
+    }
+</script>
+
+
