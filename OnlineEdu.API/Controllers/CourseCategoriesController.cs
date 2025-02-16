@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.BusinessLayer.Abstract;
 using OnlineEdu.BusniessLayer.Abstract;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
 using OnlineEdu.EntityLayer.Entities;
@@ -9,7 +10,7 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseCategoriesController(IGenericService<CourseCategory> _genericService , IMapper _mapper): ControllerBase
+    public class CourseCategoriesController(IGenericService<CourseCategory> _genericService,ICourseCategoryService _courseCategoryService , IMapper _mapper): ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> CourseCategoryGettAll()
@@ -42,6 +43,22 @@ namespace OnlineEdu.API.Controllers
         {
             await _genericService.TUpdateAsync(_mapper.Map<CourseCategory>(updateCourseCategoryDto));
             return Ok("CourseCategory Alanı Başarıyla Güncellenmiştir");
+        }
+
+        [HttpGet("DontShowOnHome/{courseCategoryId}")]
+        public async Task<IActionResult> DontShowOnHome(int courseCategoryId)
+        {
+            await _courseCategoryService.TDontShowOnHome(courseCategoryId);
+
+            return Ok();
+        }
+
+        [HttpGet("ShowOnHome/{courseCategoryId}")]
+        public async Task<IActionResult> ShowOnHome(int courseCategoryId)
+        {
+            await _courseCategoryService.TShowOnHome(courseCategoryId);
+
+            return Ok();
         }
     }
 }

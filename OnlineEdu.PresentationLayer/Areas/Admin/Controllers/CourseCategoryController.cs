@@ -158,5 +158,29 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
+
+        public async Task<IActionResult> ShowOnHome(int id)
+        {
+            var response = await _httpClientFactory.GetAsync($"CourseCategories/ShowOnHome/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> DontShowOnHome(int id)
+        {
+            var response = await _httpClientFactory.GetAsync($"CourseCategories/DontShowOnHome/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
     }
 }

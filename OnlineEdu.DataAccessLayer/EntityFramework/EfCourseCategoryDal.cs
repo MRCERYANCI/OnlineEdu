@@ -23,7 +23,7 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
             if (value.ShowCase)
             {
                 value.ShowCase = false;
-                _onlineEduContext.SaveChangesAsync();
+                await _onlineEduContext.SaveChangesAsync();
             }
         }
 
@@ -33,7 +33,7 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
             if (!value.ShowCase)
             {
                 value.ShowCase = true;
-                _onlineEduContext.SaveChangesAsync();
+                await _onlineEduContext.SaveChangesAsync();
             }
         }
     }
