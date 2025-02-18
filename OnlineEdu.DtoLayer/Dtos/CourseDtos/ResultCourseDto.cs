@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,6 @@ namespace OnlineEdu.DtoLayer.Dtos.CourseDtos
         public decimal Price { get; set; }
         public bool ShowCase { get; set; }
         public bool Status { get; set; }
+        public ResultCourseCategoryDto CourseCategory { get; set; }
     }
 }

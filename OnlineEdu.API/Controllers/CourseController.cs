@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.BusinessLayer.Abstract;
 using OnlineEdu.BusniessLayer.Abstract;
 using OnlineEdu.DtoLayer.Dtos.CourseDtos;
 using OnlineEdu.EntityLayer.Entities;
@@ -9,12 +10,12 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController(IGenericService<Course> _genericService,IMapper _mapper) : ControllerBase
+    public class CourseController(IGenericService<Course> _genericService, ICourseService _courseService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> CourseGettAll()
         {
-            return Ok(_mapper.Map<List<ResultCourseDto>>(await _genericService.TGetAllAsync()));
+            return Ok(_mapper.Map<List<ResultCourseDto>>(await _courseService.TListCourseWithCategories()));
         }
 
         [HttpGet("{id}")]

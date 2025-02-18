@@ -5,6 +5,7 @@ using OnlineEdu.DtoLayer.Dtos.BlogCategoryDtos;
 using OnlineEdu.DtoLayer.Dtos.BlogDtos;
 using OnlineEdu.DtoLayer.Dtos.ContactDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
+using OnlineEdu.DtoLayer.Dtos.CourseDtos;
 using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.PresentationLayer.Mapping
@@ -30,6 +31,9 @@ namespace OnlineEdu.PresentationLayer.Mapping
 
             CreateMap<UpdateCourseCategoryDto, CourseCategory>().ReverseMap();
             CreateMap<CreateCourseCategoryDto, CourseCategory>().ReverseMap();
+
+            CreateMap<UpdateCourseDto, Course>().ReverseMap();
+            CreateMap<CreateCourseDto, Course>().ReverseMap();
         }
     }
 }

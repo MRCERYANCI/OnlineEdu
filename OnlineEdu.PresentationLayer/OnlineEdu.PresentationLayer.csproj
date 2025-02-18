@@ -13,6 +13,7 @@
     <Folder Include="wwwroot\Images\AboutImages\" />
     <Folder Include="wwwroot\Images\BannerImages\" />
     <Folder Include="wwwroot\Images\BlogImages\" />
+    <Folder Include="wwwroot\Images\CourseImages\" />
   </ItemGroup>
 
   <ItemGroup>
