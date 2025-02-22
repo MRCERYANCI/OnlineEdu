@@ -24,5 +24,15 @@ namespace OnlineEdu.BusinessLayer.Concrete
             return await _courseDal.ListCourseWithCategories();
 
         }
+
+        public async Task TDontShowOnHome(int courseId)
+        {
+            await _courseDal.DontShowOnHome(courseId);
+        }
+
+        public async Task TShowOnHome(int courseId)
+        {
+            await _courseDal.ShowOnHome(courseId);
+        }
     }
 }

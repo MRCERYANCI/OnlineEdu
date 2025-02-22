@@ -53,7 +53,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500);
             }
         }
 
@@ -134,25 +134,26 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         {
             try
             {
-                TempData["Controller"] = "Kurs Kategorileri";
-                TempData["Action"] = "Kurs Kategorisi Güncelleme Alanı";
+                TempData["Controller"] = "Kurslar";
+                TempData["Action"] = "Kurs Güncelleme Alanı";
 
                 var values = await _httpClientFactory.GetFromJsonAsync<UpdateCourseDto>($"Course/{id}");
                 if (values != null)
                 {
+                    await CourseCategoryDropdown();
                     return View(values);
                 }
                 else
-                    return StatusCode(404, $"Sunucuda Bu Veri Bulunamadı");
+                    return StatusCode(400);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal Server Error: {ex.Message}");
+                return StatusCode(500);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetCourse(UpdateCourseDto updateCourseDto)
+        public async Task<IActionResult> GetCourse(UpdateCourseDto updateCourseDto, IFormFile courseResim)
         {
             try
             {
@@ -163,6 +164,10 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 
                 if (validationResult.IsValid)
                 {
+                    if(courseResim is not null)
+                    {
+                        updateCourseDto.ImageUrl = FileService.FileSaveToServer(courseResim, "wwwroot/Images/CourseImages/");
+                    }
                     await _httpClientFactory.PutAsJsonAsync("Course", updateCourseDto);
                     return RedirectToAction(nameof(Index));
                 }
@@ -171,8 +176,10 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                     var values = await _httpClientFactory.GetFromJsonAsync<UpdateCourseDto>($"Course/{updateCourseDto.CourseId}");
                     if (values != null)
                     {
-                        TempData["Controller"] = "Kurs Kategorileri";
-                        TempData["Action"] = "Kurs Kategorisi Güncelleme Alanı";
+                        TempData["Controller"] = "Kurslar";
+                        TempData["Action"] = "Kurs Güncelleme Alanı";
+
+                         await CourseCategoryDropdown();
 
                         validationResult.Errors.ForEach(x =>
                         {
@@ -189,6 +196,30 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             {
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
+        }
+
+        public async Task<IActionResult> ShowOnHome(int id)
+        {
+            var response = await _httpClientFactory.GetAsync($"Course/ShowOnHome/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> DontShowOnHome(int id)
+        {
+            var response = await _httpClientFactory.GetAsync($"Course/DontShowOnHome/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
         }
     }
 }

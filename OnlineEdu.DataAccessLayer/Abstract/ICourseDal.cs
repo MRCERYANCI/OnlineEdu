@@ -10,5 +10,7 @@ namespace OnlineEdu.DataAccessLayer.Abstract
     public interface ICourseDal : IGenericDal<Course>
     {
         Task<List<Course>> ListCourseWithCategories();
+        Task ShowOnHome(int courseId);
+        Task DontShowOnHome(int courseId);
     }
 }

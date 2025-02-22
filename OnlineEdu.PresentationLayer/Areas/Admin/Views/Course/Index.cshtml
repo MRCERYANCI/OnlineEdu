@@ -25,6 +25,7 @@
                             <th scope="col">Kurs Ana Sayfada Gösteriliyormu</th>
                             <th scope="col">Kurs Durumu</th>
                             <th scope="col"></th>
+                            <th scope="col">Ana Sayfa Durumu</th>
                         </tr>
                     </thead>
                     <tbody class="customtable">
@@ -38,11 +39,21 @@
                                 <td>@Courses.CourseName</td>
                                 <td>@Courses.CourseCategory.CourseCategoryName</td>
                                 <td>@Courses.Price.ToString("C")</td>
-                                <td>@(Courses.ShowCase ? "Evet" : "Hayır")</td>
+                                <td>@(Courses.ShowCase ? "Gösteriliyor" : "Gösterilmiyor")</td>
                                 <td>@(Courses.Status ? "Aktif" : "Pasif")</td>
                                 <td>
                                     <button onclick="DeletedCourse(this)" data-course-id="@Courses.CourseId" data-course-title="@Courses.CourseName" class="btn btn-outline-danger">Sil</button>
                                     <a asp-action="GetCourse" data-course-id="@Courses.CourseId" asp-controller="Course" asp-area="Admin" asp-route-id="@Courses.CourseId" class="btn btn-outline-warning">Güncelle</a>
+                                </td>
+                                <td>
+                                    @if (Courses.ShowCase)
+                                    {
+                                        <a asp-action="DontShowOnHome" asp-controller="Course" asp-area="Admin" asp-route-id="@Courses.CourseId" class="btn btn-outline-secondary">Gösterme</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="ShowOnHome" asp-controller="Course" asp-area="Admin" asp-route-id="@Courses.CourseId" class="btn btn-outline-success">Göster</a>
+                                    }
                                 </td>
                             </tr>
                         }

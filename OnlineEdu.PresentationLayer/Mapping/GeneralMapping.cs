@@ -6,6 +6,7 @@ using OnlineEdu.DtoLayer.Dtos.BlogDtos;
 using OnlineEdu.DtoLayer.Dtos.ContactDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseDtos;
+using OnlineEdu.DtoLayer.Dtos.SocialMediaDto;
 using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.PresentationLayer.Mapping
@@ -34,6 +35,9 @@ namespace OnlineEdu.PresentationLayer.Mapping
 
             CreateMap<UpdateCourseDto, Course>().ReverseMap();
             CreateMap<CreateCourseDto, Course>().ReverseMap();
+
+            CreateMap<UpdateSocialMediaDto, SocialMedia>().ReverseMap();
+            CreateMap<CreateSocialMediaDto, SocialMedia>().ReverseMap();
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
 using OnlineEdu.DtoLayer.Dtos.MessageDtos;
 using OnlineEdu.EntityLayer.Entities;
+using System.Net;
 
 namespace OnlineEdu.API.Controllers
 {
@@ -26,8 +27,10 @@ namespace OnlineEdu.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMessage(CreateMessageDto createMessageDto)
         {
+            createMessageDto.IPAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+
             await _genericService.TCreateAsync(_mapper.Map<Message>(createMessageDto));
-            return Ok("Message Alanı Başarıyla Eklenmiştir");
+            return Ok(new { Message = "Mesaj gönderildi", ClientIP = createMessageDto.IPAddress });
         }
 
         [HttpDelete("{id}")]

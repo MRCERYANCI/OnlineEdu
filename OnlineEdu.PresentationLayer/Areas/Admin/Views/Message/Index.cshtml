@@ -1,0 +1,79 @@
+﻿@model List<ResultMessageDto>
+
+@{
+    ViewData["Title"] = "Mesaj Listesi";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Mesaj Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ad Soyad</th>
+                            <th scope="col">Mail Adresi</th>
+                            <th scope="col">Telefon Numarası</th>
+                            <th scope="col">Mesaj Konusu</th>
+                            <th scope="col">Ip Adresi</th>
+                            <th scope="col">Gönderim Tarihi</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach (var Messages in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                                <td>@Messages.Name</td>
+                                <td>@Messages.Email</td>
+                                <td>@Messages.Phone</td>
+                                <td>@Messages.Subject</td>
+                                <td>@Messages.IPAddress</td>
+                                <td>@(((DateTime)Messages.CreatedDate).ToString("dd MMMM yyyy"))</td>
+                                <td>
+                                    <button onclick="DeletedMessage(this)" data-message-id="@Messages.MessageId" data-message-title="@Messages.Subject" class="btn btn-outline-danger">Sil</button>
+                                    <a asp-action="GetMessage" asp-controller="Message" asp-area="Admin" asp-route-id="@Messages.MessageId" class="btn btn-outline-warning">Mesajı Aç</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    function DeletedMessage(button) {
+        var id = button.getAttribute("data-message-id");
+        var Metin = button.getAttribute("data-message-title");
+
+        Swal.fire({
+            title: Metin + " Konulu Mesajı Silmek İstediğinize Emin misiniz?",
+            text: "Bu işlemi geri alamazsın!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+            cancelButtonText: "Hayır, Silme!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://localhost:7046/Admin/Message/DeleteMessage/" + id;
+            }
+        });
+    }
+</script>
+

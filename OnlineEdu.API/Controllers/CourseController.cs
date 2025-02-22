@@ -44,5 +44,19 @@ namespace OnlineEdu.API.Controllers
             await _genericService.TUpdateAsync(_mapper.Map<Course>(updateCourseDto));
             return Ok("Course Alanı Başarıyla Güncellenmiştir");
         }
+
+        [HttpGet("ShowOnHome/{courseId}")]
+        public async Task<IActionResult> ShowOnHome(int courseId)
+        {
+            await _courseService.TShowOnHome(courseId);
+            return Ok("Kurs Ana Sayfada Gösteriliyor");
+        }
+
+        [HttpGet("DontShowOnHome/{courseId}")]
+        public async Task<IActionResult> DontShowOnHome(int courseId)
+        {
+            await _courseService.TDontShowOnHome(courseId);
+            return Ok("Kurs Ana Sayfada Gösterilmiyor");
+        }
     }
 }

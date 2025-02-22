@@ -1,0 +1,45 @@
+﻿@model UpdateSocialMediaDto
+
+@{
+    ViewData["Title"] = "Sosyal Medya Hesapları Güncelleme Alanı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Sosyal Medya Hesapları Güncelleme Sayfası</h5>
+                <form method="post">
+                    <div class="form-group m-t-20">
+                        <input type="hidden" asp-for="SocialMediaId">
+                        <input type="hidden" asp-for="CreatedDate">
+                    </div>
+                    <div class="form-group m-t-20">
+                        <label>Sosyal Medya İkonu <small class="text-muted"></small></label>
+                        <input type="text" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Sosyal Medya İkonu Giriniz" asp-for="Icon">
+                        <span asp-validation-for="Icon" class="text-danger"></span>
+                    </div>
+                    <div class="form-group m-t-20">
+                        <label>Sosyal Medya Adı <small class="text-muted"></small></label>
+                        <input type="text" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Sosyal Medya Adı Giriniz" asp-for="Title">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Sosyal Medya Url <small class="text-muted"></small></label>
+                        <input type="url" class="form-control international-inputmask" placeholder="Lütfen Sosyal Medya Url'ini Giriniz" asp-for="Url" />
+                        <span asp-validation-for="Url" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Sosyal Medya Aktif / Pasif <small class="text-muted"></small></label>
+                        <input type="checkbox" id="date-mask" asp-for="IsActive">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

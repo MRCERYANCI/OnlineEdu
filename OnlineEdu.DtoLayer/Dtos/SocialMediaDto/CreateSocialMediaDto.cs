@@ -12,6 +12,6 @@ namespace OnlineEdu.DtoLayer.Dtos.SocialMediaDto
         public string Url { get; set; }
         public string Title { get; set; }
         public DateTime CreatedDate { get => DateTime.Now; }
-        public bool IsActive { get => false; }
+        public bool IsActive { get; set; }
     }
 }

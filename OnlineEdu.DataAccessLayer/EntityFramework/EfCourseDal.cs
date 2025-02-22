@@ -22,5 +22,25 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
         {
             return await _onlineEduContext.Courses.Include(x => x.CourseCategory).ToListAsync();
         }
+
+        public async Task DontShowOnHome(int courseId)
+        {
+            var value = await _onlineEduContext.Courses.FindAsync(courseId);
+            if (value.ShowCase)
+            {
+                value.ShowCase = false;
+                await _onlineEduContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task ShowOnHome(int courseId)
+        {
+            var value = await _onlineEduContext.Courses.FindAsync(courseId);
+            if (!value.ShowCase)
+            {
+                value.ShowCase = true;
+                await _onlineEduContext.SaveChangesAsync();
+            }
+        }
     }
 }
