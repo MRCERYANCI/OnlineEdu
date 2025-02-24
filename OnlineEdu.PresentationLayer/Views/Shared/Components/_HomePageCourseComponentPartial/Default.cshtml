@@ -1,115 +1,56 @@
-﻿ <!--? Popular Course Start -->
-        <div class="popular-course section-padding30">
-            <div class="container">
-                <div class="row justify-content-sm-center">
-                    <div class="cl-xl-7 col-lg-8 col-md-10">
-                        <!-- Section Tittle -->
-                        <div class="section-tittle text-center mb-70">
-                            <span>Most Popular Course Of This Week</span>
-                            <h2>Our Popular Course</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-                        <!-- Single course -->
-                        <div class="single-course mb-40">
-                            <div class="course-img">
-                                <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/popular_sub1.png" alt="">
-                            </div>
-                            <div class="course-caption">
-                                <div class="course-cap-top">
-                                    <h4><a href="#">Graphic Design</a></h4>
-                                </div>
-                                <div class="course-cap-mid d-flex justify-content-between">
-                                    <div class="course-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <ul><li>52 Review</li></ul>
-                                </div>
-                                <div class="course-cap-bottom d-flex justify-content-between">
-                                    <ul>
-                                        <li><i class="ti-user"></i> 562</li>
-                                        <li><i class="ti-heart"></i> 562</li>
-                                    </ul>
-                                    <span>Free</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-                        <!-- Single course -->
-                        <div class="single-course mb-40">
-                            <div class="course-img">
-                                <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/popular_sub2.png" alt="">
-                            </div>
-                            <div class="course-caption">
-                                <div class="course-cap-top">
-                                    <h4><a href="#">Web Development</a></h4>
-                                </div>
-                                <div class="course-cap-mid d-flex justify-content-between">
-                                    <div class="course-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <ul><li>52 Review</li></ul>
-                                </div>
-                                <div class="course-cap-bottom d-flex justify-content-between">
-                                    <ul>
-                                        <li><i class="ti-user"></i> 562</li>
-                                        <li><i class="ti-heart"></i> 562</li>
-                                    </ul>
-                                    <span>Free</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-6">
-                        <!-- Single course -->
-                        <div class="single-course mb-40">
-                            <div class="course-img">
-                                <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/popular_sub3.png" alt="">
-                            </div>
-                            <div class="course-caption">
-                                <div class="course-cap-top">
-                                    <h4><a href="#">Digital Marketing</a></h4>
-                                </div>
-                                <div class="course-cap-mid d-flex justify-content-between">
-                                    <div class="course-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <ul><li>52 Review</li></ul>
-                                </div>
-                                <div class="course-cap-bottom d-flex justify-content-between">
-                                    <ul>
-                                        <li><i class="ti-user"></i> 562</li>
-                                        <li><i class="ti-heart"></i> 562</li>
-                                    </ul>
-                                    <span>Free</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Section Button -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="browse-btn2 text-center mt-50">
-                            <a href="courses.html" class="btn">Find More Courses</a>
-                        </div>
-                    </div>
+﻿@model List<ResultCourseDto>
+
+<div class="popular-course section-padding30">
+    <div class="container">
+        <div class="row justify-content-sm-center">
+            <div class="cl-xl-7 col-lg-8 col-md-10">
+                <div class="section-tittle text-center mb-70">
+                    <span>Bu Haftanın En Popüler Kursu</span>
+                    <h2>Popüler Kurslarımız</h2>
                 </div>
             </div>
         </div>
-        <!-- Popular Course End -->
+        <div class="row">
+            @foreach (var Courses in Model)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-course mb-40">
+                        <div class="course-img" style="width:370px;height:175px;">
+                            <img src="~/Images/CourseImages/@Courses.ImageUrl" alt="@Courses.CourseName">
+                        </div>
+                        <div class="course-caption">
+                            <div class="course-cap-top">
+                                <h4><a href="#">@Courses.CourseName</a></h4>
+                            </div>
+                            <div class="course-cap-mid d-flex justify-content-between">
+                                <div class="course-ratting">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <ul><li>52 Puan</li></ul>
+                            </div>
+                            <div class="course-cap-bottom d-flex justify-content-between">
+                                <ul>
+                                    <li><i class="ti-user"></i> 562</li>
+                                    <li><i class="ti-heart"></i> 562</li>
+                                </ul>
+                                <span style="color:red;">@Courses.Price.ToString("C")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="browse-btn2 text-center mt-50">
+                    <a href="courses.html" class="btn">Tüm Kursları Gör</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -60,5 +60,11 @@ namespace OnlineEdu.API.Controllers
 
             return Ok();
         }
+
+        [HttpGet("RetrieveActiveCategoriesHomePage")]
+        public async Task<IActionResult> RetrieveActiveCategoriesHomePage()
+        {
+            return Ok(_mapper.Map<List<ResultCourseCategoryDto>>(await _genericService.TGetFilteredListAsync(x => x.ShowCase == true)));
+        }
     }
 }
