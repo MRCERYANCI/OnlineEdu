@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using OnlineEdu.DataAccessLayer.Concrete;
+using OnlineEdu.EntityLayer.Entities;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddHttpClient();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<OnlineEduContext>();
+
+builder.Services.AddDbContext<OnlineEduContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
+});
 
 var app = builder.Build();
 

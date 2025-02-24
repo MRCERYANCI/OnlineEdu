@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnlineEdu.EntityLayer.Entities
 {
-    public class AppUser : IdentityUser<int>
+    public class AppRole : IdentityRole<int>
     {
-        public string FirsName { get; set; }
-        public string LastName { get; set; }
-        public string? ProfileImageUrl { get; set; }
     }
 }
