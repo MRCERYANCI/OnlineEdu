@@ -17,6 +17,12 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<List<ResultAboutDto>>(await _genericService.TGetAllAsync()));
         }
 
+        [HttpGet("GetFirstRecord")]
+        public async Task<IActionResult> GetFirstRecord()
+        {
+            return Ok(_mapper.Map<ResultAboutDto>(await _genericService.TGetFirstRecord(x => x.AboutId)));
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAbout(int id)
         {

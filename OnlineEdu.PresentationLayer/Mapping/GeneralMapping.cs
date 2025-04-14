@@ -6,7 +6,11 @@ using OnlineEdu.DtoLayer.Dtos.BlogDtos;
 using OnlineEdu.DtoLayer.Dtos.ContactDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseDtos;
+using OnlineEdu.DtoLayer.Dtos.RoleDtos;
 using OnlineEdu.DtoLayer.Dtos.SocialMediaDto;
+using OnlineEdu.DtoLayer.Dtos.TeacherSocialMediaDtos;
+using OnlineEdu.DtoLayer.Dtos.TestimonialDtos;
+using OnlineEdu.DtoLayer.Dtos.UserDtos;
 using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.PresentationLayer.Mapping
@@ -38,6 +42,21 @@ namespace OnlineEdu.PresentationLayer.Mapping
 
             CreateMap<UpdateSocialMediaDto, SocialMedia>().ReverseMap();
             CreateMap<CreateSocialMediaDto, SocialMedia>().ReverseMap();
+
+            CreateMap<ResultRoleDto, AppRole>().ReverseMap();
+            CreateMap<CreateRoleDto, AppRole>().ReverseMap();
+            CreateMap<UpdateRoleDto, AppRole>().ReverseMap();
+
+            CreateMap<ResultTeacherSocialMediaDto, TeacherSocialMedia>().ReverseMap();
+            CreateMap<UpdateTeacherSocialMediaDto, TeacherSocialMedia>().ReverseMap();
+            CreateMap<CreateTeacherSocialMediaDto, TeacherSocialMedia>().ReverseMap();
+
+            CreateMap<AppUser, ResultUserDto>().ReverseMap();
+
+            CreateMap<ResultTestimonialDto, Testimonial>().ReverseMap();
+            CreateMap<CreateTestimonialDto, Testimonial>().ReverseMap();
+            CreateMap<UpdateTestimonialDto, Testimonial>().ReverseMap();
         }
     }
 }
+    

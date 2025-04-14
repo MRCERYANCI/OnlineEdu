@@ -1,0 +1,24 @@
+﻿@model List<ResultBlogDto>
+
+
+<aside class="single_sidebar_widget popular_post_widget">
+    <h3 class="widget_title" style="color: #2d2d2d;">Son Bloglar</h3>
+    @foreach (var Blogs in Model)
+    {
+        var fark = DateTime.Now - Blogs.CreatedDate;
+        string zamanBilgisi = fark.TotalDays < 1
+        ? Blogs.CreatedDate.ToString("HH:mm") + " - Bugün"
+        : Blogs.CreatedDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"));
+
+        <div class="media post_item">
+            <img src="~/Images/BlogImages/@Blogs.ImageUrl" alt="@Blogs.Title" style="width:100px;height:60px;">
+            <div class="media-body">
+                <a href="blog_details.html">
+                    <h3 style="color: #2d2d2d;">@Blogs.Title</h3>
+                </a>
+                <p>@zamanBilgisi</p>
+            </div>
+        </div>
+    }
+
+</aside>

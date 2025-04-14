@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusinessLayer.ValidationRules.BlogCategoryRules;
 using OnlineEdu.DtoLayer.Dtos.BlogCategoryDtos;
@@ -8,6 +9,7 @@ using OnlineEdu.PresentationLayer.Helpers;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
     public class BlogCategoryController(IMapper _mapper) : Controller
@@ -59,6 +61,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             return View();
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> CreateBlogCategory(CreateBlogCategoryDto createBlogCategoryDto)
         {
@@ -116,6 +120,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> GetBlogCategory(UpdateBlogCategoryDto updateBlogCategoryDto)
         {

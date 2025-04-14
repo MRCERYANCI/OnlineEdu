@@ -19,5 +19,11 @@ namespace OnlineEdu.EntityLayer.Entities
         public bool ShowCase { get; set; }
         public bool Status { get; set; }
 
+        public int? AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+
+        public List<CourseRegister> CourseRegisters { get; set; }
+        public List<Comment> Comments { get; set; }
+
     }
 }

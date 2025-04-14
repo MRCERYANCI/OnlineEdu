@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.PresentationLayer.Helpers;
+using OnlineEdu.PresentationLayer.Services.UserService;
 
 namespace OnlineEdu.PresentationLayer.ViewComponents.HomePageViewComponents
 {
-    public class _HomePageTeamsMemberComponentPartial : ViewComponent
+    public class _HomePageTeamsMemberComponentPartial(IUserService _userService) : ViewComponent
     {
-        public IViewComponentResult Invoke()
+
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            return View(await _userService.GetAll4Teachers());
         }
     }
 }

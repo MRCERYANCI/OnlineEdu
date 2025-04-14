@@ -27,5 +27,8 @@ namespace OnlineEdu.DataAccessLayer.Concrete
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
+        public DbSet<CourseRegister> CourseRegisters { get; set; }
+        public DbSet<TeacherSocialMedia> TeacherSocialMedias { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

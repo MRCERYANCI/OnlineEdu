@@ -1,0 +1,36 @@
+﻿@model List<ResultUserDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_HomePageTitleAreaComponentPartial")
+
+<div class="team-area pt-160 pb-160">
+    <div class="container">
+        <div class="row">
+            @foreach (var Teachers in Model)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-team mb-30">
+                        <div class="team-img">
+                            <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/team1.png" alt="@Teachers.FirsName @Teachers.LastName">
+                            <!-- Blog Social -->
+                            <ul class="team-social">
+                                @foreach (var TeacherSocialMedias in Teachers.TeacherSocialMedias)
+                                {
+                                    <li><a href="@TeacherSocialMedias.Url" target="_blank"><i class="@TeacherSocialMedias.Icon"></i></a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="team-caption">
+                            <h3><a href="instructor.html">@Teachers.FirsName @Teachers.LastName</a></h3>
+                            <p>Eğitmen</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@model CreateTeacherSocialMediaDto
+
+@{
+    ViewData["Title"] = "CreateTeacherSocialMedia";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Sosyal Medya Ekleme Alanı</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-vertical" method="post">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Sosyal Medya Adı</label>
+                                            <input type="text" class="form-control" asp-for="Name" placeholder="Lütfen Sosyal Medya Adını Giriniz">
+                                            <span asp-validation-for="Name" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Sosyal Medya İkonu</label>
+                                            <input type="text" class="form-control" asp-for="Icon" placeholder="Lütfen Sosyal Medya Ikonu Giriniz">
+                                            <span asp-validation-for="Icon" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Sosyal Medya Url</label>
+                                            <input type="text" class="form-control" asp-for="Url" placeholder="Lütfen Sosyal Medya Url'i Giriniz">
+                                            <span asp-validation-for="Url" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

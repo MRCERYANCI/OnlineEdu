@@ -11,5 +11,6 @@ namespace OnlineEdu.DataAccessLayer.Abstract
     {
         Task ShowOnHome(int courseCategoryId);
         Task DontShowOnHome(int courseCategoryId);
+        Task<int> GetCourseCategoryCount();
     }
 }

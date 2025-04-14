@@ -1,64 +1,34 @@
-﻿<!--? Testimonial Start -->
+﻿@model List<ResultTestimonialDto>
+
 <div class="testimonial-area fix pt-180 pb-180 section-bg" data-background="/Vitrin%20Temaları/onlineedu-master/assets/img/gallery/section_bg03.png">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-xl-8 col-lg-9 col-md-9">
-                        <div class="h1-testimonial-active">
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial pt-65">
-                                <!-- Testimonial tittle -->
-                                <div class="testimonial-icon mb-45">
-                                    <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/testimonial.png" class="ani-btn " alt="">
-                                </div>
-                                <!-- Testimonial Content -->
-                                <div class="testimonial-caption text-center">
-                                    <p>
-                                        You can’t succeed if you just do what others do and
-                                        follow the well-worn path. You need to create a new and
-                                        original path for yourself.
-                                    </p>
-                                    <!-- Rattion -->
-                                    <div class="testimonial-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <div class="rattiong-caption">
-                                        <span>Clifford Frazier<span> - Colorlib Themes</span> </span>
-                                    </div>
-                                </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9 col-md-9">
+                <div class="h1-testimonial-active">
+
+                    @foreach (var Testimonials in Model)
+                    {
+                        <div class="single-testimonial pt-65">
+                            <div class="testimonial-icon mb-45">
+                                <img src="~/Images/TestimonialImages/@Testimonials.ImageUrl" class="ani-btn" alt="@Testimonials.Name - @Testimonials.Title" style="width:100px;height:100px;border-radius:50%">
                             </div>
-                            <!-- Single Testimonial -->
-                            <div class="single-testimonial pt-65">
-                                <!-- Testimonial tittle -->
-                                <div class="testimonial-icon mb-45">
-                                    <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/testimonial.png" class="ani-btn " alt="">
+
+                            <div class="testimonial-caption text-center">
+                                <p>@Testimonials.Comment</p>
+                                <div class="testimonial-ratting">
+                                    @for (int i = 0; i < Testimonials.Star; i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
                                 </div>
-                                <!-- Testimonial Content -->
-                                <div class="testimonial-caption text-center">
-                                    <p>
-                                        You can’t succeed if you just do what others do and
-                                        follow the well-worn path. You need to create a new and
-                                        original path for yourself.
-                                    </p>
-                                    <!-- Rattion -->
-                                    <div class="testimonial-ratting">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <div class="rattiong-caption">
-                                        <span>Clifford Frazier<span> - Colorlib Themes</span> </span>
-                                    </div>
+                                <div class="rattiong-caption">
+                                    <span>@Testimonials.Name<span> - @Testimonials.Title</span> </span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
-        <!-- Testimonial End -->
+    </div>
+</div>

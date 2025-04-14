@@ -1,0 +1,49 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineEdu.DtoLayer.Dtos.RoleDtos;
+using OnlineEdu.EntityLayer.Entities;
+using OnlineEdu.PresentationLayer.Services.RoleServices;
+
+namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
+{
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
+    [Route("[area]/[controller]/[action]/{id?}")]
+    public class RoleController(RoleManager<AppRole> _roleManager, IMapper _mapper, IRoleService _roleService) : Controller
+    {
+        public async Task<IActionResult> Index()
+        {
+            TempData["Controller"] = "Rol";
+            TempData["Action"] = "Rol Listesi";
+
+            var values = await _roleService.GetAllRoleAsync();
+            return View(values);
+        }
+
+        public IActionResult CreateRole()
+        {
+            TempData["Controller"] = "Rol";
+            TempData["Action"] = "Rol Ekleme Alanı";
+
+            return View();
+        }
+
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(CreateRoleDto createRoleDto)
+        {
+            await _roleService.CreateRoleAsync(createRoleDto);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> DeleteRole(int id)
+        {
+            await _roleService.DeleteRoleAsync(id);
+            return RedirectToAction("Index");
+        }
+    }
+}

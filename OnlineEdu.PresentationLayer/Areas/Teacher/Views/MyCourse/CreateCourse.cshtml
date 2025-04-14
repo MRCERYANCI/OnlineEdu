@@ -1,0 +1,76 @@
+﻿@model CreateCourseDto
+
+@{
+    ViewData["Title"] = "CreateCourse";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Kurs Ekleme Alanı</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-vertical" method="post" enctype="multipart/form-data">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Kurs Adı</label>
+                                            <input type="text" class="form-control" asp-for="CourseName" placeholder="Lütfen Kurs Adını Giriniz">
+                                            <span asp-validation-for="CourseName" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Kurs Kategorisi</label>
+                                            <label>Kurs Kategorisi <small class="text-muted"></small></label>
+                                            <select asp-items="@ViewBag.CourseCategoryList" asp-for="CourseCategoryId" class="form-control">
+                                                <option>Kategori Seçiniz</option>
+                                            </select>
+                                            <span asp-validation-for="CourseCategoryId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Kurs Fiyatı</label>
+                                            <input type="number" class="form-control" asp-for="Price" placeholder="Lütfen Kurs Fiyatını Giriniz">
+                                            <span asp-validation-for="Price" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Kurs Kapak Resmi</label>
+                                            <input type="file" class="form-control" name="courseResim">
+                                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" asp-for="Status" id="flexSwitchCheckDefault">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">
+                                                Kurs Aktif / Pasif
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

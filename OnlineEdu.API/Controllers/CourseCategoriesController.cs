@@ -66,5 +66,11 @@ namespace OnlineEdu.API.Controllers
         {
             return Ok(_mapper.Map<List<ResultCourseCategoryDto>>(await _genericService.TGetFilteredListAsync(x => x.ShowCase == true)));
         }
+
+        [HttpGet("GetCourseCategoryCount")]
+        public async Task<IActionResult> GetCourseCategoryCount()
+        {
+            return Ok(await _courseCategoryService.TGetCourseCategoryCount());
+        }
     }
 }

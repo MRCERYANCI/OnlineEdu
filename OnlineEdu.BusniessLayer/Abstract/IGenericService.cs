@@ -18,5 +18,6 @@ namespace OnlineEdu.BusniessLayer.Abstract
         Task<int> TFilteredCountAsync(Expression<Func<T, bool>> filter);
         Task<List<T>> TGetFilteredListAsync(Expression<Func<T, bool>> filter);
         Task<T> TGetFilteredAsync(Expression<Func<T, bool>> filter);
+        Task<T> TGetFirstRecord(Expression<Func<T, object>> filter);
     }
 }

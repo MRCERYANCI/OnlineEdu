@@ -1,0 +1,105 @@
+﻿@model CreateTestimonialDto
+
+@{
+    ViewData["Title"] = "CreateTestimonial";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .star {
+        font-size: 30px;
+        color: gray;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+        .star.hovered,
+        .star.selected {
+            color: gold;
+        }
+
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Yeni Referans Ekleme Sayfası</h5>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group m-t-20">
+                        <label>Adı Soyadı <small class="text-muted"></small></label>
+                        <input type="text" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Ad ve Soyad Giriniz" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group m-t-20">
+                        <label>Referans Resmi<small class="text-muted"></small></label>
+                        <input type="file" class="form-control date-inputmask" id="date-mask" name="testimonialResim">
+                        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group m-t-20">
+                        <label>Ünvan <small class="text-muted"></small></label>
+                        <input type="text" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Referansın Ünvanını Giriniz" asp-for="Title">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group m-t-20">
+                        <label>Referans Puanı <small class="text-muted"></small></label>
+                        <div id="starRating">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input type="hidden" asp-for="Star" id="scoreInput" />
+                        <span asp-validation-for="Star" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group m-t-20">
+                        <label>Referans Açıklama <small class="text-muted"></small></label>
+                        <textarea type="number" class="form-control date-inputmask" id="date-mask" placeholder="Lütfen Referansın Açıklamasını Giriniz" rows="10" asp-for="Comment"></textarea>
+                        <span asp-validation-for="Comment" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-outline-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const stars = document.querySelectorAll(".star");
+    const scoreInput = document.getElementById("scoreInput");
+
+    stars.forEach((star, index) => {
+        // Tıklama olayı (puan kaydetme)
+        star.addEventListener("click", () => {
+            const value = star.getAttribute("data-value");
+            scoreInput.value = value;
+
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add("selected");
+            }
+        });
+
+        // Hover (fare üzerine gelince yıldızları boyama)
+        star.addEventListener("mouseover", () => {
+            stars.forEach(s => s.classList.remove("hovered"));
+            for (let i = 0; i <= index; i++) {
+                stars[i].classList.add("hovered");
+            }
+        });
+
+        // Fare yıldızlardan çıkınca hover'ı temizle
+        star.addEventListener("mouseout", () => {
+            stars.forEach(s => s.classList.remove("hovered"));
+        });
+    });
+
+</script>

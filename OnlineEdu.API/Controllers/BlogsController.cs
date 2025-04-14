@@ -10,7 +10,7 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController(IBlogService _genericService, IMapper _mapper) : ControllerBase
+    public class BlogsController(IBlogService _genericService,IBlogService _blogService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> BlogGettAll()
@@ -43,6 +43,24 @@ namespace OnlineEdu.API.Controllers
         {
             await _genericService.TUpdateAsync(_mapper.Map<Blog>(updateBlogDto));
             return Ok("Blog Alanı Başarıyla Güncellenmiştir");
+        }
+
+        [HttpGet("ListBlogsWithCategoriesByUser/{appUserId}")]
+        public async Task<IActionResult> ListBlogsWithCategoriesByUser(int appUserId)
+        {
+            return Ok(_mapper.Map<List<ResultBlogDto>>(await _genericService.TListBlogsWithCategoriesByUser(appUserId)));
+        }
+
+        [HttpGet("GetLastFourBlogs")]
+        public async Task<IActionResult> GetLastFourBlogs()
+        {
+            return Ok(_mapper.Map<List<ResultBlogDto>>(await _blogService.TGetLastFourBlogs()));
+        }
+
+        [HttpGet("GetBlogCount")]
+        public async Task<IActionResult> GetBlogCount()
+        {
+            return Ok(await _blogService.TGetBlogCount());
         }
     }
 }

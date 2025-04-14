@@ -9,11 +9,23 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Teacher\Data\" />
+    <Folder Include="Areas\Teacher\Models\" />
     <Folder Include="wwwroot\Admin Temaları\matrix-admin-master\assets\libs\inputmask\dist\inputmask\dependencyLibs\" />
     <Folder Include="wwwroot\Images\AboutImages\" />
     <Folder Include="wwwroot\Images\BannerImages\" />
     <Folder Include="wwwroot\Images\BlogImages\" />
     <Folder Include="wwwroot\Images\CourseImages\" />
+    <Folder Include="wwwroot\Images\TestimonialImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Admin Temaları\mazer-1.0.0\.github\FUNDING.yml" />
+    <None Include="wwwroot\Vitrin Temaları\login-form-07\.DS_Store" />
+    <None Include="wwwroot\Vitrin Temaları\login-form-07\css\.DS_Store" />
+    <None Include="wwwroot\Vitrin Temaları\login-form-07\fonts\.DS_Store" />
+    <None Include="wwwroot\Vitrin Temaları\login-form-07\images\.DS_Store" />
+    <None Include="wwwroot\Vitrin Temaları\login-form-07\scss\.DS_Store" />
   </ItemGroup>
 
   <ItemGroup>

@@ -51,6 +51,11 @@ namespace OnlineEdu.BusniessLayer.Concrete
             return await _genericDal.GetFilteredListAsync(filter);
         }
 
+        public async Task<T> TGetFirstRecord(Expression<Func<T, object>> filter)
+        {
+            return await _genericDal.GetFirstRecord(filter);
+        }
+
         public async Task TUpdateAsync(T entity)
         {
             await _genericDal.UpdateAsync(entity);

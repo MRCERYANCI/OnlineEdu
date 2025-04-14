@@ -10,7 +10,7 @@ namespace OnlineEdu.PresentationLayer.ViewComponents.HomePageViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseDto>>("Course/RetrieveActiveCourses");
+            var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseDto>>("Course/GetTopSixCourses");
             return View(values);
         }
     }

@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "ConfirmEmail";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+
+    .success-container {
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .success-icon {
+        font-size: 120px;
+        color: #28a745;
+        animation: popIn 0.5s ease-in-out;
+    }
+
+    h2 {
+        margin-top: 10px;
+        color: #333;
+    }
+
+    p {
+        color: #666;
+    }
+
+    @@keyframes popIn {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @@keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
+
+
+<div class="success-container">
+    <i class="fa-solid fa-circle-check success-icon"></i>
+    <h2>E-posta Onaylandı!</h2>
+    <p>Başarıyla e-posta adresinizi onayladınız.</p>
+</div>
+
+

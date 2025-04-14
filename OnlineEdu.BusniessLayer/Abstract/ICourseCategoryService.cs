@@ -12,5 +12,6 @@ namespace OnlineEdu.BusinessLayer.Abstract
     {
         Task TShowOnHome(int courseCategoryId);
         Task TDontShowOnHome(int courseCategoryId);
+        Task<int> TGetCourseCategoryCount();
     }
 }

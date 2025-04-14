@@ -19,9 +19,24 @@ namespace OnlineEdu.BusinessLayer.Concrete
             _blogDal = blogDal;
         }
 
+        public async Task<int> TGetBlogCount()
+        {
+            return await _blogDal.GetBlogCount();
+        }
+
+        public async Task<List<Blog>> TGetLastFourBlogs()
+        {
+            return await _blogDal.GetLastFourBlogs();
+        }
+
         public async Task<List<Blog>> TListBlogsWithCategories()
         {
             return await _blogDal.ListBlogsWithCategories();
+        }
+
+        public async Task<List<Blog>> TListBlogsWithCategoriesByUser(int appUserId)
+        {
+            return await _blogDal.ListBlogsWithCategoriesByUser(appUserId);
         }
     }
 }

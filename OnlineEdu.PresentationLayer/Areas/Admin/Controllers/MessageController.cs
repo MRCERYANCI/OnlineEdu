@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusinessLayer.ValidationRules.MessageRules;
 using OnlineEdu.DtoLayer.Dtos.MessageDtos;
@@ -8,6 +9,7 @@ using OnlineEdu.PresentationLayer.Helpers;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
     public class MessageController(IMapper _mapper) : Controller

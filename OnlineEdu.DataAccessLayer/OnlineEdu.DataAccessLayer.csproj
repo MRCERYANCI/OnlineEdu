@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineEdu.DtoLayer\OnlineEdu.DtoLayer.csproj" />
     <ProjectReference Include="..\OnlineEdu.EntityLayer\OnlineEdu.EntityLayer.csproj" />
   </ItemGroup>
 

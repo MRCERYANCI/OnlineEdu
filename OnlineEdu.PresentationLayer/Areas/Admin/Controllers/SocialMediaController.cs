@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusinessLayer.ValidationRules.SocialMediaRules;
 using OnlineEdu.DtoLayer.Dtos.SocialMediaDto;
@@ -8,6 +9,7 @@ using OnlineEdu.PresentationLayer.Helpers;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
     public class SocialMediaController(IMapper _mapper) : Controller
@@ -59,6 +61,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             return View();
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> CreateSocialMedia(CreateSocialMediaDto createSocialMediaDto)
         {
@@ -118,6 +122,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> GetSocialMedia(UpdateSocialMediaDto updateSocialMediaDto)
         {

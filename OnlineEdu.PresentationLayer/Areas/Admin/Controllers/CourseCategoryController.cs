@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusinessLayer.ValidationRules.CourseCategoryRules;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
@@ -9,6 +10,7 @@ using System.Net.Http;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
     public class CourseCategoryController(IMapper _mapper) : Controller
@@ -60,6 +62,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             return View();
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> CreateCourseCategory(CreateCourseCategoryDto createCourseCategoryDto)
         {
@@ -119,6 +123,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> GetCourseCategory(UpdateCourseCategoryDto updateCourseCategoryDto)
         {

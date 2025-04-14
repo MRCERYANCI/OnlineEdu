@@ -1,0 +1,66 @@
+﻿@model List<ResultCourseDto>
+
+@{
+    ViewData["Title"] = "GetCourseByCategory";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_HomePageTitleAreaComponentPartial")
+
+<div class="popular-course section-padding30">
+    <div class="container">
+        <div class="row">
+            @if (Model.Count > 0)
+            {
+                @foreach (var Courses in Model)
+                {
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-course mb-40">
+                            <div class="course-img" style="width:370px;height:175px;">
+                                <img src="~/Images/CourseImages/@Courses.ImageUrl" alt="@Courses.CourseName">
+                            </div>
+                            <div class="course-caption">
+                                <div class="course-cap-top">
+                                    <h4><a href="#">@Courses.CourseName</a></h4>
+                                </div>
+                                <div class="course-cap-mid d-flex justify-content-between">
+                                    <div class="course-ratting">
+                                        @if (Courses.AverageScore == 0)
+                                        {
+                                            <span class="star">&#9733;</span>
+                                            <span class="star">&#9733;</span>
+                                            <span class="star">&#9733;</span>
+                                            <span class="star">&#9733;</span>
+                                            <span class="star">&#9733;</span>
+                                        }
+
+                                        @for (int i = 0; i < Courses.AverageScore; i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                    </div>
+                                    <ul><li>@Courses.CommentCount Puan</li></ul>
+                                </div>
+                                <div class="course-cap-bottom d-flex justify-content-between">
+                                    <ul>
+                                        <li><i class="ti-user"></i> 562</li>
+                                        <li><i class="ti-heart"></i> 562</li>
+                                    </ul>
+                                    <span style="color:red;">@Courses.Price.ToString("C")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div style="text-align: center; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);">
+                    <div style="font-size: 60px; color: #ccc; margin-bottom: 20px;">📚</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #d9534f; margin-bottom: 10px;">Kurs Bulunamadı</div>
+                    <div style="font-size: 16px; color: #666;">Şu anda listelenecek bir kurs bulunamadı. Lütfen daha sonra tekrar kontrol edin.</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

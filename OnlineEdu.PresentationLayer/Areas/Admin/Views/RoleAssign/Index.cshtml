@@ -1,0 +1,63 @@
+﻿@using OnlineEdu.EntityLayer.Entities
+@model List<AppUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title m-b-0">Kullanıcılar Tablosu(@Model.Count())</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Resim</th>
+                            <th scope="col">Ad Soyad</th>
+                            <th scope="col">Mail Adresi</th>
+                            <th scope="col">Telefon Numarası</th>
+                            <th scope="col">Kullanıcı Adı</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="customtable">
+                        @foreach (var Users in Model)
+                        {
+                            Count++;
+
+                            <tr>
+                                <td>@Count</td>
+                                <td>
+                                    @if (Users.ProfileImageUrl != null)
+                                    {
+                                        <img src="@Users.ProfileImageUrl" style="width:60px;height:60px;border-radius:50%;" />
+                                    }
+                                    else
+                                    {
+                                        <div style="width: 70px; height: 70px; background: linear-gradient(to right, #FF5733, #FFC300); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px; color: white; font-size: 30px; font-weight: bold;">
+                                            @Users.FirsName.Substring(0,1)@Users.LastName.Substring(0,1)
+                                        </div>
+                                    }
+                                </td>
+                                <td>@Users.FirsName @Users.LastName</td>
+                                <td>@Users.Email</td>
+                                <td>@Users.PhoneNumber</td>
+                                <td>@Users.UserName</td>
+                                <td>
+                                    <a asp-action="AssignRole" asp-controller="RoleAssign" asp-area="Admin" asp-route-id="@Users.Id" class="btn btn-outline-info">Rol Ata</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -14,7 +14,7 @@ namespace OnlineEdu.DtoLayer.Dtos.BlogDtos
         public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Status { get; set; }
-
         public int BlogCategoryId { get; set; }
+        public int AppUserId { get; set; }
     }
 }

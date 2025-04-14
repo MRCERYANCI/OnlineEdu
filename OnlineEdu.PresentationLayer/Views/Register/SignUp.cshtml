@@ -1,0 +1,99 @@
+﻿@model UserRegisterDto
+
+@{
+    ViewData["Title"] = "Bilgi Akademisi Kullanıcı Kayıt Sayfası";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Vitrin Temaları/login-form-07/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/Vitrin Temaları/login-form-07/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Vitrin Temaları/login-form-07/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Vitrin Temaları/login-form-07/css/style.css">
+
+    <title>Bilgi Akademisi Kullanıcı Kayıt Sayfası</title>
+</head>
+<body>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="~/Vitrin Temaları/login-form-07/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+                </div>
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mb-4">
+                                <h3>Kayıt Ol</h3>
+                                <p class="mb-4">Ücretsiz Kurslarımıza Kayıt Olmak İçin Aşağıdaki Kayıt Formunu Doldurun</p>
+                            </div>
+                            <form method="post">
+                                <div class="form-group first">
+                                    <label for="username">Adınız</label>
+                                    <input type="text" class="form-control" asp-for="FirstName">
+                                </div>
+                                <div class="form-group first">
+                                    <label for="username">Soyadınız</label>
+                                    <input type="text" class="form-control" asp-for="LastName">
+                                </div>
+                                <div class="form-group first">
+                                    <label for="username">Mail Adresiniz</label>
+                                    <input type="email" class="form-control" asp-for="Email">
+                                </div>
+                                <div class="form-group first">
+                                    <label for="username">Telefon Numarası</label>
+                                    <input type="text" class="form-control" asp-for="PhoneNumber">
+                                </div>
+                                <div class="form-group first">
+                                    <label for="username">Kullanıcı Adı</label>
+                                    <input type="text" class="form-control" asp-for="UserName">
+                                </div>
+                                <div class="form-group first">
+                                    <label for="password">Şifre</label>
+                                    <input type="password" class="form-control" asp-for="Password">
+                                </div>
+                                <div class="form-group first">
+                                    <label for="password">Şifre Tekrar</label>
+                                    <input type="password" class="form-control" asp-for="ConfirmPassword">
+                                </div>
+
+                                <p style="color:red;">@Html.ValidationSummary()</p>
+
+                                <button class="btn btn-block btn-primary">Kayıt Ol</button>
+
+                                <span class="d-block text-left my-4 text-muted">&mdash; or login with &mdash;</span>
+
+                                <div class="social-login">
+                                    <a href="#" class="facebook">
+                                        <span class="icon-facebook mr-3"></span>
+                                    </a>
+                                    <a href="#" class="twitter">
+                                        <span class="icon-twitter mr-3"></span>
+                                    </a>
+                                    <a href="#" class="google">
+                                        <span class="icon-google mr-3"></span>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Vitrin Temaları/login-form-07/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Vitrin Temaları/login-form-07/js/popper.min.js"></script>
+    <script src="~/Vitrin Temaları/login-form-07/js/bootstrap.min.js"></script>
+    <script src="~/Vitrin Temaları/login-form-07/js/main.js"></script>
+</body>
+</html>
+

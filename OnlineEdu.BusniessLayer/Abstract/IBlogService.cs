@@ -11,5 +11,8 @@ namespace OnlineEdu.BusinessLayer.Abstract
     public interface IBlogService : IGenericService<Blog>
     {
         Task<List<Blog>> TListBlogsWithCategories();
+        Task<List<Blog>> TListBlogsWithCategoriesByUser(int appUserId);
+        Task<List<Blog>> TGetLastFourBlogs();
+        Task<int> TGetBlogCount();
     }
 }

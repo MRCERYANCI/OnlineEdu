@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineEdu.BusinessLayer.ValidationRules.CourseRules;
@@ -13,6 +14,7 @@ using OnlineEdu.PresentationLayer.Services;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
     public class CourseController(IMapper _mapper) : Controller
@@ -88,6 +90,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             return View();
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> CreateCourse(CreateCourseDto createCourseDto, IFormFile courseResim)
         {
@@ -152,6 +156,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> GetCourse(UpdateCourseDto updateCourseDto, IFormFile courseResim)
         {

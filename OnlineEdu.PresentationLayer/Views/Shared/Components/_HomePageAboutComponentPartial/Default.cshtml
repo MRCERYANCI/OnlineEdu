@@ -1,36 +1,36 @@
-﻿<!--? About Law Start-->
+﻿@model ResultAboutDto
+
 <div class="about-area section-padding2">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="about-caption mb-50">
-                    <!-- Section Tittle -->
+               
                     <div class="section-tittle mb-35">
-                        <span>More About Our Company</span>
-                        <h2>Want to know more</h2>
+                        <span>Biz Kimiz?</span>
+                        <h2>Bilgi Akademisi Kimdir</h2>
                     </div>
-                    <p>There arge many variations ohf passages of sorem gpsum ilable, but the majority have suffered alteration in some form, by ected humour, or randomised words whi.</p>
+                    <p>@Html.DisplayFor(x => x.Description)</p>
                     <ul>
-                        <li><span class="flaticon-business"></span> Creative ideas base</li>
-                        <li><span class="flaticon-communications-1"></span> Assages of sorem gpsum ilable</li>
-                        <li><span class="flaticon-graduated"></span> Have suffered alteration in so</li>
-                        <li><span class="flaticon-tools-and-utensils"></span> Randomised words whi</li>
+                        <li><span class="flaticon-business"></span> @Html.DisplayFor(x => x.Item1)</li>
+                        <li><span class="flaticon-communications-1"></span> @Html.DisplayFor(x => x.Item2)</li>
+                        <li><span class="flaticon-graduated"></span> @Html.DisplayFor(x => x.Item3)</li>
+                        <li><span class="flaticon-tools-and-utensils"></span> @Html.DisplayFor(x => x.Item4)</li>
                     </ul>
-                    <a href="about.html" class="btn">More About Us</a>
+                    <a href="/About/Index" class="btn">Daha Fazlasına Ulaş</a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12">
-                <!-- about-img -->
+
                 <div class="about-img ">
                     <div class="about-font-img d-none d-lg-block">
-                        <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/about2.png" alt="">
+                        <img src="@Html.DisplayFor(x=>x.ImageUrl1)" alt="">
                     </div>
                     <div class="about-back-img ">
-                        <img src="~/Vitrin Temaları/onlineedu-master/assets/img/gallery/about1.png" alt="">
+                        <img src="@Html.DisplayFor(x=>x.ImageUrl2)" alt="">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- About Law End-->

@@ -1,0 +1,89 @@
+﻿@model List<ResultCourseDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+    int Count = 0;
+}
+
+<link rel="stylesheet" href="~/Admin Temaları/mazer-1.0.0/dist/assets/vendors/simple-datatables/style.css">
+
+<div class="card">
+    <div class="card-header">
+        Kurs Tablosu
+    </div>
+    <div class="card-body">
+        <table class="table table-striped" id="table1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Kurs Adı</th>
+                    <th>Kategori</th>
+                    <th>Fiyat</th>
+                    <th>Durumu</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Courses in Model)
+                {
+                    Count++;
+
+                    <tr>
+                        <td>@Count</td>
+                        <td>@Courses.CourseName</td>
+                        <td>@Courses.CourseCategory.CourseCategoryName</td>
+                        <td>@Courses.Price.ToString("C")</td>
+                        <td>
+                            @if (Courses.Status)
+                            {
+                                <span class="badge bg-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Pasif</span>
+                            }
+                        </td>
+                        <td>
+                            <button onclick="DeletedCourse(this)" data-course-id="@Courses.CourseId" data-course-title="@Courses.CourseName" class="btn btn-danger">Sil</button>
+                            <a asp-action="GetCourse" data-course-id="@Courses.CourseId" asp-controller="MyCourse" asp-area="Teacher" asp-route-id="@Courses.CourseId" class="btn btn-warning">Güncelle</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-action="CreateCourse" asp-controller="MyCourse" asp-area="Teacher"  class="btn btn-primary">Kurs Ekle</a>
+    </div>
+</div>
+
+
+<script src="~/Admin Temaları/mazer-1.0.0/dist/assets/vendors/simple-datatables/simple-datatables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable = new simpleDatatables.DataTable(table1);
+
+    function DeletedCourse(button) {
+        var id = button.getAttribute("data-course-id");
+        var Metin = button.getAttribute("data-course-title");
+
+        Swal.fire({
+            title: Metin + " Kursunu Silmek İstediğinize Emin misiniz?",
+            text: "Bu işlemi geri alamazsın!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+            cancelButtonText: "Hayır, Silme!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://localhost:7046/Teacher/MyCourse/DeleteCourse/" + id;
+            }
+        });
+    }
+</script>
+

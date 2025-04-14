@@ -9,6 +9,7 @@ namespace OnlineEdu.DtoLayer.Dtos.CourseDtos
     public class UpdateCourseDto
     {
         public int CourseId { get; set; }
+        public int AppUserId { get; set; }
         public string CourseName { get; set; }
         public string ImageUrl { get; set; }
         public int CourseCategoryId { get; set; }

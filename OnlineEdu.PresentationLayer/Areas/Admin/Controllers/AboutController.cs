@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.ValidationRules.AboutRules;
 using OnlineEdu.DtoLayer.Dtos.AboutDtos;
@@ -9,6 +10,7 @@ using OnlineEdu.PresentationLayer.Helpers;
 
 namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
     public class AboutController(IMapper _mapper) : Controller
@@ -60,6 +62,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             return View();
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto, IFormFile Image1, IFormFile Image2)
         {
@@ -132,6 +136,8 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             }
         }
 
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> GetAbout(UpdateAboutDto updateAboutDto)
         {

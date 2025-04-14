@@ -19,9 +19,24 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
             _onlineEduContext = onlineEduContext;
         }
 
+        public async Task<int> GetBlogCount()
+        {
+            return await _onlineEduContext.Blogs.Where(x => x.Status == true).CountAsync();
+        }
+
+        public async Task<List<Blog>> GetLastFourBlogs()
+        {
+            return await _onlineEduContext.Blogs.OrderByDescending(y => y.CreatedDate).Where(z => z.Status == true).Take(4).Include(x => x.BlogCategory).ToListAsync();
+        }
+
         public async Task<List<Blog>> ListBlogsWithCategories()
         {
            return await _onlineEduContext.Blogs.Include(x=>x.BlogCategory).ToListAsync();
+        }
+
+        public async Task<List<Blog>> ListBlogsWithCategoriesByUser(int appUserId)
+        {
+            return await _onlineEduContext.Blogs.Where(x=>x.AppUserId == appUserId).Include(x=>x.BlogCategory).ToListAsync();
         }
     }
 }

@@ -19,5 +19,6 @@ namespace OnlineEdu.DataAccessLayer.Abstract
         Task<int> FilteredCountAsync(Expression<Func<T, bool>> filter);
         Task<List<T>> GetFilteredListAsync(Expression<Func<T, bool>> filter);
         Task<T> GetFilteredAsync(Expression<Func<T, bool>> filter);
+        Task<T> GetFirstRecord(Expression<Func<T, object>> filter);
     }
 }

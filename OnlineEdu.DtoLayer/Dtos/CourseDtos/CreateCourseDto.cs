@@ -13,7 +13,8 @@ namespace OnlineEdu.DtoLayer.Dtos.CourseDtos
         public string ImageUrl { get; set; }
         public int CourseCategoryId { get; set; }
         public decimal Price { get; set; }
-        public bool ShowCase { get; set; }
-        public bool Status { get; set; }
+        public bool ShowCase { get; set; } = false;
+        public int AppUserId { get; set; }
+        public bool Status { get; set; } = true;
     }
 }

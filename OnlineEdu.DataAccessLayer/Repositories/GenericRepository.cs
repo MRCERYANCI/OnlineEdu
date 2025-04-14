@@ -67,10 +67,16 @@ namespace OnlineEdu.DataAccessLayer.Repositories
             return await Table.Where(filter).ToListAsync();
         }
 
+        public async Task<T> GetFirstRecord(Expression<Func<T, object>> filter)
+        {
+            return await Table.OrderByDescending(filter).FirstOrDefaultAsync();
+        }
+
         public async Task UpdateAsync(T entity)
         {
             Table.Update(entity);
             await _onlineEduContext.SaveChangesAsync();
         }
+
     }
 }

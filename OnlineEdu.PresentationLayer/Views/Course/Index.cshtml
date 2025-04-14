@@ -1,0 +1,59 @@
+﻿@model List<ResultCourseDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_HomePageTitleAreaComponentPartial")
+
+
+
+<div class="popular-course section-padding30">
+    <div class="container">
+        <div class="row">
+
+            @foreach (var Courses in Model)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6">
+                    <div class="single-course mb-40">
+                        <div class="course-img" style="width:370px;height:175px;">
+                            <img src="~/Images/CourseImages/@Courses.ImageUrl" alt="@Courses.CourseName">
+                        </div>
+                        <div class="course-caption">
+                            <div class="course-cap-top">
+                                <h4><a href="#">@Courses.CourseName</a></h4>
+                            </div>
+                            <div class="course-cap-mid d-flex justify-content-between">
+                                <div class="course-ratting">
+                                    @if (Courses.AverageScore == 0)
+                                    {
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                    }
+
+                                    @for (int i = 0; i < Courses.AverageScore; i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
+                                </div>
+                                <ul><li>@Courses.CommentCount Puan</li></ul>
+                            </div>
+                            <div class="course-cap-bottom d-flex justify-content-between">
+                                <ul>
+                                    <li><i class="ti-user"></i> 562</li>
+                                    <li><i class="ti-heart"></i> 562</li>
+                                </ul>
+                                <span style="color:red;">@Courses.Price.ToString("C")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+           
+        </div>
+    </div>
+</div>

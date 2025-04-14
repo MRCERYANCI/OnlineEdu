@@ -1,0 +1,73 @@
+﻿@model CreateBlogDto
+
+@{
+    ViewData["Title"] = "CreateBlog";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-12 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Blog Ekleme Alanı</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-vertical" method="post" enctype="multipart/form-data">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Blog Başlığı</label>
+                                            <input type="text" class="form-control" asp-for="Title" placeholder="Lütfen Blog Başlığını Giriniz">
+                                            <span asp-validation-for="Title" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Kurs Kategorisi</label>
+                                            <label>Blog Kategorisi <small class="text-muted"></small></label>
+                                            <select asp-items="@ViewBag.CategoryList" asp-for="BlogCategoryId" class="form-control">
+                                                <option>Kategori Seçiniz</option>
+                                            </select>
+                                            <span asp-validation-for="BlogCategoryId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Blog Kapak Resmi</label>
+                                            <input type="file" class="form-control" name="fileName">
+                                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="first-name-vertical">Blog İçerik</label>
+                                            <textarea id="Content" asp-for="Content"></textarea>
+                                            <span asp-validation-for="Content" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Kaydet</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('Content');
+</script>

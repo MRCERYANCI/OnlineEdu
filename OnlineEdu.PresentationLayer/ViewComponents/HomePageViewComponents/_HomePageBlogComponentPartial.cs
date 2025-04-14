@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.DtoLayer.Dtos.BlogDtos;
+using OnlineEdu.PresentationLayer.Helpers;
 
 namespace OnlineEdu.PresentationLayer.ViewComponents.HomePageViewComponents
 {
     public class _HomePageBlogComponentPartial : ViewComponent
     {
-        public IViewComponentResult Invoke()
+        private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
+
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            var values = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogDto>>("Blogs/GetLastFourBlogs");
+            return View(values);
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+@await Component.InvokeAsync("_TeacherHeadComponentPartial")
+<body>
+    <div id="app">
+        @await Component.InvokeAsync("_TeacherSideBarComponentPartial")
+        <div id="main">
+            @await Component.InvokeAsync("_TeacherHeaderComponentPartial")
+
+            <div class="page-heading">
+                @await Component.InvokeAsync("_TeacherPageTitleComponentPartial")
+                <section class="section">
+                    @RenderBody()
+                </section>
+            </div>
+
+            @await Component.InvokeAsync("_TeacherFooterComponentPartial")
+        </div>
+    </div>
+    @await Component.InvokeAsync("_TeacherScriptComponentPartial")
+</body>
+</html>

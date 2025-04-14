@@ -62,7 +62,37 @@ namespace OnlineEdu.API.Controllers
         [HttpGet("RetrieveActiveCourses")]
         public async Task<IActionResult> RetrieveActiveCourses()
         {
-            return Ok(_mapper.Map<List<ResultCourseDto>>(await _genericService.TGetFilteredListAsync(x => x.ShowCase == true)));
+            return Ok(_mapper.Map<List<ResultCourseDto>>(await _genericService.TGetFilteredListAsync(x => x.ShowCase == true && x.Status == true)));
+        }
+
+        [HttpGet("ListCourseWithCategoriesAndTeacher/{appUserId}")]
+        public async Task<IActionResult> ListCourseWithCategoriesAndTeacher(int appUserId)
+        {
+            return Ok(_mapper.Map<List<ResultCourseDto>>(await _courseService.TListCourseWithCategoriesAndTeacher(appUserId)));
+        }
+
+        [HttpGet("GetCourseCount")]
+        public async Task<IActionResult> GetCourseCount()
+        {
+            return Ok(await _courseService.TCountAsync());
+        }
+
+        [HttpGet("GetCoursesByCategoryId/{courseId}")]
+        public async Task<IActionResult> GetCoursesByCategoryId(int courseId)
+        {
+            return Ok(_mapper.Map<List<ResultCourseDto>>(await _courseService.TListCourseWithCategories(x=>x.CourseCategoryId == courseId && x.Status == true)));
+        }
+
+        [HttpGet("GetTopSixCourses")]
+        public async Task<IActionResult> GetTopSixCourses()
+        {
+            return Ok(await _courseService.TGetTopSixCourses());
+        }
+
+        [HttpGet("GetAllCoursesForHomePage")]
+        public async Task<IActionResult> GetAllCoursesForHomePage()
+        {
+            return Ok(await _courseService.TGetAllCoursesForHomePage());
         }
     }
 }

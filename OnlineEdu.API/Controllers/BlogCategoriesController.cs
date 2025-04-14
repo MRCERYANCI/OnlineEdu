@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
+using OnlineEdu.DataAccessLayer.Abstract;
 using OnlineEdu.DtoLayer.Dtos.BlogCategoryDtos;
 using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogCategoriesController(IGenericService<BlogCategory> _genericService,IMapper _mapper) : ControllerBase
+    public class BlogCategoriesController(IGenericService<BlogCategory> _genericService, IMapper _mapper, IBlogCategoryDal _blogCategoryDal) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> BlogCategoryGettAll()
@@ -42,6 +45,12 @@ namespace OnlineEdu.API.Controllers
         {
             await _genericService.TUpdateAsync(_mapper.Map<BlogCategory>(updateBlogCategoryDto));
             return Ok("BlogCategory Alanı Başarıyla Güncellenmiştir");
+        }
+
+        [HttpGet("GetCategoriesWithBlogs")]
+        public async Task<IActionResult> GetCategoriesWithBlogs()
+        {
+            return Ok(await _blogCategoryDal.GetCategoriesWithBlogs());
         }
     }
 }

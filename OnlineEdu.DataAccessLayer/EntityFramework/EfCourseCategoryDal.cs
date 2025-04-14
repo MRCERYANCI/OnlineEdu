@@ -1,4 +1,5 @@
-﻿using OnlineEdu.DataAccessLayer.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineEdu.DataAccessLayer.Abstract;
 using OnlineEdu.DataAccessLayer.Concrete;
 using OnlineEdu.DataAccessLayer.Repositories;
 using OnlineEdu.EntityLayer.Entities;
@@ -25,6 +26,11 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
                 value.ShowCase = false;
                 await _onlineEduContext.SaveChangesAsync();
             }
+        }
+
+        public async Task<int> GetCourseCategoryCount()
+        {
+            return await _onlineEduContext.CourseCategories.Where(x => x.ShowCase == true).CountAsync();
         }
 
         public async Task ShowOnHome(int courseCategoryId)

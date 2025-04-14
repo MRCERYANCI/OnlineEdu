@@ -15,27 +15,15 @@
             <div class="main-header ">
                 <div class="header-top d-none d-lg-block">
                     <!-- Left Social -->
-                    <div class="header-left-social">
-                        <ul class="header-social">
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li> <a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                        </ul>
-                    </div>
+                @await Component.InvokeAsync("_UILayoutHeaderSocialMediaComponentPartial")
                     <div class="container">
                         <div class="col-xl-12">
                             <div class="row d-flex justify-content-between align-items-center">
-                                <div class="header-info-left">
-                                    <ul>
-                                        <li>info@bilgiakademisi.net.tr</li>
-                                        <li>0533 038 08 30</li>
-                                    </ul>
-                                </div>
+                            @await Component.InvokeAsync("_UILayoutHeaderContactInfoComponentPartial")
                                 <div class="header-info-right">
                                     <ul>
-                                        <li><a href="#"><i class="ti-user"></i>Giriş Yap</a></li>
-                                        <li><a href="#"><i class="ti-lock"></i>Kayıt Ol</a></li>
+                                        <li><a href="/Account/Login"><i class="ti-user"></i>Giriş Yap</a></li>
+                                        <li><a href="/Register/SignUp"><i class="ti-lock"></i>Kayıt Ol</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -45,7 +33,7 @@
                 <div class="header-bottom header-sticky">
                     <!-- Logo -->
                     <div class="logo d-none d-lg-block">
-                        <a href="index.html"><img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/logo.png" alt=""></a>
+                        <a href="/Home/Index"><img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/logo.png" alt=""></a>
                     </div>
                     <div class="container">
                         <div class="menu-wrapper">
@@ -58,10 +46,10 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="/Home/Index">Ana Sayfa</a></li>
-                                        <li><a href="about.html">Hakkımızda</a></li>
-                                        <li><a href="courses.html">Kurslar</a></li>
-                                        <li><a href="instructor.html">Eğitmenler</a></li>
-                                        <li><a href="instructor.html">Blog</a></li>                                
+                                        <li><a href="/About/Index">Hakkımızda</a></li>
+                                        <li><a href="/Course/Index">Kurslar</a></li>
+                                        <li><a href="/Teacher/Index">Eğitmenler</a></li>
+                                        <li><a href="/Blog/Index">Blog</a></li>                                
                                         <li><a href="contact.html">İletişim</a></li>
                                     </ul>
                                 </nav>

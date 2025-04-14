@@ -1,0 +1,74 @@
+﻿@model List<ResultTeacherSocialMediaDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+    int Count = 0;
+}
+
+<link rel="stylesheet" href="~/Admin Temaları/mazer-1.0.0/dist/assets/vendors/simple-datatables/style.css">
+
+<div class="card">
+    <div class="card-header">
+        Sosyal Medya Tablosu
+    </div>
+    <div class="card-body">
+        <table class="table table-striped" id="table1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Sosyal Medya Adı</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var SocialMedias in Model)
+                {
+                    Count++;
+
+                    <tr>
+                        <td>@Count</td>
+                        <td><i class="@SocialMedias.Icon"></i> <a href="@SocialMedias.Url" target="_blank">@SocialMedias.Name</a></td>
+                        <td>
+                            <button onclick="DeletedTeacherSocialMedia(this)" data-teacher-social-id="@SocialMedias.TeacherSocialMediaId" data-teacher-social-title="@SocialMedias.Name" class="btn btn-danger">Sil</button>
+                            <a asp-action="GetSocialMedia" asp-controller="MySocialMedia" asp-area="Teacher" asp-route-id="@SocialMedias.TeacherSocialMediaId" class="btn btn-warning">Güncelle</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-action="CreateTeacherSocialMedia" asp-controller="MySocialMedia" asp-area="Teacher" class="btn btn-primary">Sosyal Medya Ekle</a>
+    </div>
+</div>
+
+
+<script src="~/Admin Temaları/mazer-1.0.0/dist/assets/vendors/simple-datatables/simple-datatables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable = new simpleDatatables.DataTable(table1);
+
+    function DeletedTeacherSocialMedia(button) {
+        var id = button.getAttribute("data-teacher-social-id");
+        var Metin = button.getAttribute("data-teacher-social-title");
+
+        Swal.fire({
+            title: Metin + " 'ı İstediğinize Emin misiniz?",
+            text: "Bu işlemi geri alamazsın!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Sil!",
+            cancelButtonText: "Hayır, Silme!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "https://localhost:7046/Teacher/MySocialMedia/DeleteTeacherSocialMedia/" + id;
+            }
+        });
+    }
+</script>
+
