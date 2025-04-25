@@ -1,0 +1,151 @@
+﻿@model int
+
+@{
+    ViewData["Title"] = "CreateCourseVideo";
+    Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
+}
+
+
+<style>
+    .upload-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .progress {
+        height: 20px;
+    }
+
+    .status-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+</style>
+
+<div class="mb-3">
+    <input type="hidden" value="@TempData["CourseId"]" class="form-control" id="courseId">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Video Başlık</label>
+    <input type="text" class="form-control" id="title">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Videolar</label>
+    <input type="file" class="form-control" id="videoFiles" multiple accept="video/*">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Kapak Resimleri</label>
+    <input type="file" class="form-control" id="thumbnailFiles" multiple accept="image/*">
+</div>
+
+<button class="btn btn-primary" onclick="uploadAllVideos()">Yüklemeye Başla</button>
+
+<div id="progressContainer" class="mt-4"></div>
+
+
+<script>
+    async function uploadAllVideos() {
+        const courseId = document.getElementById('courseId').value;
+        const videoFiles = document.getElementById('videoFiles').files;
+        const thumbnailFiles = document.getElementById('thumbnailFiles').files;
+        const progressContainer = document.getElementById('progressContainer');
+        const Title = document.getElementById('title');
+        progressContainer.innerHTML = '';
+
+        if (videoFiles.length !== thumbnailFiles.length) {
+            alert("Her video için bir kapak resmi yüklenmelidir.");
+            return;
+        }
+
+        const uploads = [];
+
+        for (let i = 0; i < videoFiles.length; i++) {
+            const formData = new FormData();
+            formData.append('CourseId', courseId);
+            formData.append('Title', Title.value);
+            formData.append('Video', videoFiles[i]);
+            formData.append('Thumbnails', thumbnailFiles[i]);
+            formData.append('VideoNumber', 1);
+
+            // UI Kartı Oluştur
+            const card = document.createElement('div');
+            card.className = 'upload-card';
+
+            const title = document.createElement('div');
+            title.innerHTML = `<strong>Video ${i + 1}</strong> - ${videoFiles[i].name}`;
+            card.appendChild(title);
+
+            const progress = document.createElement('div');
+            progress.className = 'progress my-2';
+            const bar = document.createElement('div');
+            bar.className = 'progress-bar progress-bar-striped progress-bar-animated';
+            bar.style.width = '0%';
+            bar.innerText = '0%';
+            progress.appendChild(bar);
+            card.appendChild(progress);
+
+            const status = document.createElement('div');
+            status.className = 'status-text text-muted';
+            status.innerText = 'Hazırlanıyor...';
+            card.appendChild(status);
+
+            progressContainer.appendChild(card);
+
+            // Yüklemeyi Başlat
+            uploads.push(uploadSingle(formData, bar, status));
+        }
+
+        await Promise.all(uploads);
+    }
+
+    function uploadSingle(formData, bar, statusText) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://localhost:7061/api/CourseVideos/upload-multiple', true);
+
+            xhr.upload.onprogress = function (e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    bar.style.width = percent + '%';
+                    bar.innerText = percent + '%';
+                    statusText.innerText = 'Yükleniyor...';
+                }
+            };
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    bar.classList.remove('progress-bar-animated');
+                    bar.classList.remove('progress-bar-striped');
+                    bar.classList.add('bg-success');
+                    statusText.innerText = 'Tamamlandı!';
+                    statusText.classList.remove('text-muted');
+                    statusText.classList.add('text-success');
+                    resolve(xhr.response);
+                } else {
+                    bar.classList.add('bg-danger');
+                    statusText.innerText = 'Hata oluştu!';
+                    statusText.classList.remove('text-muted');
+                    statusText.classList.add('text-danger');
+                    reject(xhr.response);
+                }
+            };
+
+            xhr.onerror = function () {
+                bar.classList.add('bg-danger');
+                statusText.innerText = 'Yüklenemedi!';
+                statusText.classList.remove('text-muted');
+                statusText.classList.add('text-danger');
+                reject('Network error');
+            };
+
+            xhr.send(formData);
+        });
+    }
+</script>
+

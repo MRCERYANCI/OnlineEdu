@@ -82,7 +82,78 @@ namespace OnlineEdu.PresentationLayer.Controllers
             return BadRequest();
         }
 
-       
+       public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
+        [HttpGet("sifremi-unuttum")]
+        public async Task<IActionResult> ForgotPassword()
+        {
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("sifremi-unuttum")]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+        {
+            if (!ModelState.IsValid) { return View(); }
+
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+            if(user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationLink = Url.Action("ConfirmEmail", "Account",
+                    new { userId = user.Id, token = emailToken }, Request.Scheme);
+
+                await _emailSender.SendConfirmedEmailAsync(user.Email, user.FirsName + " " + user.LastName, user.UserName, confirmationLink);
+                ModelState.AddModelError("", "Mail Adresiniz Onaylı Olamadığından Şifre Sıfırlama Talebi Gönderilmedi Önce " + forgotPasswordDto.Email + " Mail Adresinize Gelen Kodu Doğrulayınız");
+                return View();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetLink = Url.Action("ResetPassword", "Account",
+                    new { token = token, email = user.Email }, Request.Scheme);
+
+            await _emailSender.SendForgotPassword(forgotPasswordDto.Email, resetLink, user.UserName, user.FirsName + " " + user.LastName);
+
+            ModelState.AddModelError("", "Şifre Sıfırlama Talebi " + forgotPasswordDto.Email + " Mail Adresinize Gönderilmiştir");
+
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ResetPassword(string token,string email)
+        {
+            if(token == null || email == null)
+                ModelState.AddModelError("", "Geçersiz şifre sıfırlama isteği.");
+
+            var model = new ResetPasswordDto{ Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            if(!ModelState.IsValid) { return View(); }
+
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+            
+            if(user == null)
+                ModelState.AddModelError("", "Geçersiz şifre sıfırlama isteği.");
+
+            var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View();
+        }
     }
 }

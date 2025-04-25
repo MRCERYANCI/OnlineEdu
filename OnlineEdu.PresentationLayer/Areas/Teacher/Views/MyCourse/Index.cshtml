@@ -4,6 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Teacher/Views/TeacherLayout/Index.cshtml";
     int Count = 0;
+    int courseId = 0;
 }
 
 <link rel="stylesheet" href="~/Admin Temaları/mazer-1.0.0/dist/assets/vendors/simple-datatables/style.css">
@@ -47,6 +48,7 @@
                         <td>
                             <button onclick="DeletedCourse(this)" data-course-id="@Courses.CourseId" data-course-title="@Courses.CourseName" class="btn btn-danger">Sil</button>
                             <a asp-action="GetCourse" data-course-id="@Courses.CourseId" asp-controller="MyCourse" asp-area="Teacher" asp-route-id="@Courses.CourseId" class="btn btn-warning">Güncelle</a>
+                            <a asp-action="CourseVideo" data-course-id="@Courses.CourseId" asp-controller="MyCourse" asp-area="Teacher" asp-route-id="@Courses.CourseId" class="btn btn-success">Kurs Videoları</a>
                         </td>
                     </tr>
                 }

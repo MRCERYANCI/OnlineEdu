@@ -7,18 +7,18 @@
             <article class="blog_item">
                 <div class="blog_item_img">
                     <img class="card-img rounded-0" src="~/Images/BlogImages/@Blogs.ImageUrl" alt="@Blogs.Title">
-                    <a href="#" class="blog_item_date">
+                    <a href="/Blog/BlogDetails/@Blogs.SefUrl" class="blog_item_date">
                         <h3>@(((DateTime)Blogs.CreatedDate).ToString("dd"))</h3>
                         <p>@(((DateTime)Blogs.CreatedDate).ToString("MMMM"))</p>
                     </a>
                 </div>
                 <div class="blog_details">
-                    <a class="d-inline-block" href="blog_details.html">
+                    <a class="d-inline-block" href="/Blog/BlogDetails/@Blogs.SefUrl">
                         <h2 class="blog-head" style="color: #2d2d2d;">@Blogs.Title</h2>
                     </a>
                     <ul class="blog-info-link">
-                        <li><a href="#"><i class="fa fa-user"></i> @Blogs.BlogCategory.Name</a></li>
-                        <li><a href="#"><i class="fa fa-comments"></i> 0 Yorum</a></li>
+                        <li><a href="/Blog/BlogDetails/@Blogs.SefUrl"><i class="fa fa-user"></i> @Blogs.BlogCategory.Name</a></li>
+                        <li><a href="/Blog/BlogDetails/@Blogs.SefUrl"><i class="fa fa-comments"></i> @Blogs.BlogComments.Count() Yorum</a></li>
                     </ul>
                 </div>
             </article>

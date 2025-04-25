@@ -17,7 +17,7 @@ namespace OnlineEdu.PresentationLayer.Controllers
         public async Task<IActionResult> GetCourseByCategory(int id)
         {
             var courses = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseDto>>($"Course/GetCoursesByCategoryId/{id}");
-            string categoryName = (from x in courses select x.CourseCategory.CourseCategoryName ).FirstOrDefault();
+            string categoryName = (from x in courses select x.CourseCategory.CourseCategoryName).FirstOrDefault();
             TempData["Title-Area"] = categoryName + " Kursları";
 
             if (courses == null)

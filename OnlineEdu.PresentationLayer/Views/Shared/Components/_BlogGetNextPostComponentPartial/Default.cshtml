@@ -1,0 +1,23 @@
+﻿@model UpdateBlogDto
+
+@if (Model.Title != null)
+{
+    <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+        <div class="detials">
+            <p>Sonraki Post</p>
+            <a href="/Blog/BlogDetails/@Html.DisplayFor(x=>x.SefUrl)">
+                <h4 style="color: #2d2d2d;">@Html.DisplayFor(x=>x.Title)</h4>
+            </a>
+        </div>
+        <div class="arrow">
+            <a href="/Blog/BlogDetails/@Html.DisplayFor(x=>x.SefUrl)">
+                <span class="lnr text-white ti-arrow-right"></span>
+            </a>
+        </div>
+        <div class="thumb">
+            <a href="/Blog/BlogDetails/@Html.DisplayFor(x=>x.SefUrl)">
+                <img class="img-fluid" src="~/Images/BlogImages/@Html.DisplayFor(x=>x.ImageUrl)" alt="@Html.DisplayFor(x=>x.Title)" style="width:100px;height:70px;">
+            </a>
+        </div>
+    </div>
+}

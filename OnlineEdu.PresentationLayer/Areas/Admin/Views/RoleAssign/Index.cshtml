@@ -1,5 +1,5 @@
 ﻿@using OnlineEdu.EntityLayer.Entities
-@model List<AppUser>
+@model List<UsersRoleDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -23,6 +23,7 @@
                             <th scope="col">Mail Adresi</th>
                             <th scope="col">Telefon Numarası</th>
                             <th scope="col">Kullanıcı Adı</th>
+                            <th scope="col">Roller</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -36,11 +37,11 @@
                                 <td>
                                     @if (Users.ProfileImageUrl != null)
                                     {
-                                        <img src="@Users.ProfileImageUrl" style="width:60px;height:60px;border-radius:50%;" />
+                                        <img src="@Users.ProfileImageUrl" style="width:40px;height:40px;border-radius:50%;" />
                                     }
                                     else
                                     {
-                                        <div style="width: 70px; height: 70px; background: linear-gradient(to right, #FF5733, #FFC300); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px; color: white; font-size: 30px; font-weight: bold;">
+                                        <div style="width: 40px; height: 40px; background: linear-gradient(to right, #FF5733, #FFC300); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px; color: white; font-size: 10px; font-weight: bold;">
                                             @Users.FirsName.Substring(0,1)@Users.LastName.Substring(0,1)
                                         </div>
                                     }
@@ -49,6 +50,12 @@
                                 <td>@Users.Email</td>
                                 <td>@Users.PhoneNumber</td>
                                 <td>@Users.UserName</td>
+                                <td>
+                                    @foreach(var Roles in Users.Roles)
+                                    {
+                                        <span class="badge bg-dark text-white">@Roles</span>
+                                    }
+                                </td>
                                 <td>
                                     <a asp-action="AssignRole" asp-controller="RoleAssign" asp-area="Admin" asp-route-id="@Users.Id" class="btn btn-outline-info">Rol Ata</a>
                                 </td>

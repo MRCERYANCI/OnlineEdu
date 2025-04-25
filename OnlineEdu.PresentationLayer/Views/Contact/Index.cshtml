@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+
+
+@await Component.InvokeAsync("_HomePageTitleAreaComponentPartial")
+
+<section class="contact-section">
+    <div class="container">
+        @await Component.InvokeAsync("_ContactMapComponentPartial")
+        <div class="row">
+            <div class="col-12">
+                <h2 class="contact-title">Bizimle İletişime Geçin</h2>
+            </div>
+            @await Component.InvokeAsync("_ContactSendMessageComponentPartial")
+
+            @await Component.InvokeAsync("_ContactInfoComponentPartial")
+        </div>
+    </div>
+</section>
+

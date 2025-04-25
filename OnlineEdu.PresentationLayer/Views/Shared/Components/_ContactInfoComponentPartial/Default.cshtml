@@ -1,0 +1,25 @@
+﻿@model ResultContactDto
+
+<div class="col-lg-3 offset-lg-1">
+    <div class="media contact-info">
+        <span class="contact-info__icon"><i class="ti-home"></i></span>
+        <div class="media-body">
+            <h3>@Html.DisplayFor(x => x.Address)</h3>
+            <p>Küçükali, TR 38050</p>
+        </div>
+    </div>
+    <div class="media contact-info">
+        <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+        <div class="media-body">
+            <h3>+90 @Html.DisplayFor(x => x.Phone)</h3>
+            <p>Pazartesiden cumaya 09:00 - 18:00</p>
+        </div>
+    </div>
+    <div class="media contact-info">
+        <span class="contact-info__icon"><i class="ti-email"></i></span>
+        <div class="media-body">
+            <h3>@Html.DisplayFor(x => x.Email)</h3>
+            <p>Sorularınızı istediğiniz zaman bize iletin!</p>
+        </div>
+    </div>
+</div>

@@ -19,6 +19,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Kurs Resmi</th>
+                            <th scope="col">Kurs Eğitmeni</th>
                             <th scope="col">Kurs Adı</th>
                             <th scope="col">Kurs Kategorisi</th>
                             <th scope="col">Kurs Fiyatı</th>
@@ -36,6 +37,7 @@
                             <tr>
                                 <td>@Count</td>
                                 <td><img src="~/Images/CourseImages/@Courses.ImageUrl" style="width:130px;height:100px;border-radius:5px;" /></td>
+                                <td>@Courses.AppUser.FirsName @Courses.AppUser.LastName</td>
                                 <td>@Courses.CourseName</td>
                                 <td>@Courses.CourseCategory.CourseCategoryName</td>
                                 <td>@Courses.Price.ToString("C")</td>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using OnlineEdu.BusinessLayer.ValidationRules.CourseRules;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseDtos;
+using OnlineEdu.DtoLayer.Dtos.CourseVideoDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
 using OnlineEdu.PresentationLayer.Services;
@@ -205,6 +206,26 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
             {
                 return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
+        }
+
+        public async Task<IActionResult> CourseVideo(int id)
+        {
+            TempData["Controller"] = "Kurslar";
+            TempData["Action"] = "Kurs Vidoları";
+
+            ViewBag.Id = id;    
+
+            var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseVideoDto>>($"CourseVideos/list?courseId={id}");
+            return View(values);
+        }
+
+        public IActionResult CreateCourseVideo(int id)
+        {
+            TempData["Controller"] = "Kurslar";
+            TempData["Action"] = "Kurs Videosu Ekleme Alanı";
+            TempData["CourseId"] = id;
+
+            return View();
         }
     }
 }

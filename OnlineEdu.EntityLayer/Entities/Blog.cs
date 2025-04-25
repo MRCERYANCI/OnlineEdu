@@ -14,6 +14,7 @@ namespace OnlineEdu.EntityLayer.Entities
         public string Title { get; set; }
         public string Content { get; set; }
         public string ImageUrl { get; set; }
+        public string SefUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Status { get; set; }
 
@@ -22,5 +23,7 @@ namespace OnlineEdu.EntityLayer.Entities
 
         public AppUser AppUser { get; set; }
         public int? AppUserId { get; set; }
+
+        public List<BlogComment> BlogComments { get; set; }
     }
 }

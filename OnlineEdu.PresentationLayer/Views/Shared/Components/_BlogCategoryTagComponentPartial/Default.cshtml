@@ -1,0 +1,13 @@
+﻿@model List<ResultBlogCategoryDto>
+
+<aside class="single_sidebar_widget tag_cloud_widget">
+    <h4 class="widget_title" style="color: #2d2d2d;">Tüm Kategoriler</h4>
+    <ul class="list">
+        @foreach(var BlogCategories in Model)
+        {
+            <li>
+                <a href="/Blog/BlogsByCategory/@BlogCategories.BlogCategoryId">@BlogCategories.Name</a>
+            </li>
+        }
+    </ul>
+</aside>

@@ -1,4 +1,5 @@
-﻿using OnlineEdu.EntityLayer.Entities;
+﻿using OnlineEdu.DtoLayer.Dtos.BlogDtos;
+using OnlineEdu.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,8 @@ namespace OnlineEdu.DataAccessLayer.Abstract
         Task<List<Blog>> ListBlogsWithCategoriesByUser(int appUserId);
         Task<List<Blog>> GetLastFourBlogs();
         Task<int> GetBlogCount();
+        Task<Blog> GetBlogDetailsWithUser(string id);
+        Task<List<Blog>> GetBlogsByCategory(int categoryId);
+        Task<List<Blog>> SearchBlogPosts(string query);
     }
 }

@@ -14,5 +14,8 @@ namespace OnlineEdu.BusinessLayer.Abstract
         Task<List<Blog>> TListBlogsWithCategoriesByUser(int appUserId);
         Task<List<Blog>> TGetLastFourBlogs();
         Task<int> TGetBlogCount();
+        Task<Blog> TGetBlogDetailsWithUser(string id);
+        Task<List<Blog>> TGetBlogsByCategory(int categoryId);
+        Task<List<Blog>> TSearchBlogPosts(string query);
     }
 }

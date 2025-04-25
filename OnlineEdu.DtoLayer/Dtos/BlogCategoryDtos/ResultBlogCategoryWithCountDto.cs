@@ -8,6 +8,7 @@ namespace OnlineEdu.DtoLayer.Dtos.BlogCategoryDtos
 {
     public class ResultBlogCategoryWithCountDto
     {
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int Count { get; set; }
     }

@@ -1,76 +1,76 @@
 ﻿
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/loder.png" alt="">
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="header-area">
+        <div class="main-header ">
+            <div class="header-top d-none d-lg-block">
+                <!-- Left Social -->
+                @await Component.InvokeAsync("_UILayoutHeaderSocialMediaComponentPartial")
+                <div class="container">
+                    <div class="col-xl-12">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            @await Component.InvokeAsync("_UILayoutHeaderContactInfoComponentPartial")
+                            <div class="header-info-right">
+                                <ul>
+                                    <li><a href="/Account/Login"><i class="ti-user"></i>Giriş Yap</a></li>
+                                    <li><a href="/Register/SignUp"><i class="ti-lock"></i>Kayıt Ol</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom header-sticky">
+                <!-- Logo -->
+                <div class="logo d-none d-lg-block">
+                    <a href="/Home/Index"><img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/logo.png" alt=""></a>
+                </div>
+                <div class="container">
+                    <div class="menu-wrapper">
+                        <!-- Logo -->
+                        <div class="logo logo2 d-block d-lg-none">
+                            <a href="/Home/Index"><img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/logo.png" alt=""></a>
+                        </div>
+                        <!-- Main-menu -->
+                        <div class="main-menu d-none d-lg-block">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a href="/Home/Index">Ana Sayfa</a></li>
+                                    <li><a href="/About/Index">Hakkımızda</a></li>
+                                    <li><a href="/Course/Index">Kurslar</a></li>
+                                    <li><a href="/Teacher/Index">Eğitmenler</a></li>
+                                    <li><a href="/Blog/Index">Blog</a></li>
+                                    <li><a href="/Contact/Index">İletişim</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Header-btn -->
+                        <div class="header-search d-none d-lg-block">
+                            <form action="#" class="form-box f-right ">
+                                <input type="text" name="Search" placeholder="Kursları Ara">
+                                <div class="search-icon">
+                                    <i class="fas fa-search special-tag"></i>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  
-    <header>
-        <div class="header-area">
-            <div class="main-header ">
-                <div class="header-top d-none d-lg-block">
-                    <!-- Left Social -->
-                @await Component.InvokeAsync("_UILayoutHeaderSocialMediaComponentPartial")
-                    <div class="container">
-                        <div class="col-xl-12">
-                            <div class="row d-flex justify-content-between align-items-center">
-                            @await Component.InvokeAsync("_UILayoutHeaderContactInfoComponentPartial")
-                                <div class="header-info-right">
-                                    <ul>
-                                        <li><a href="/Account/Login"><i class="ti-user"></i>Giriş Yap</a></li>
-                                        <li><a href="/Register/SignUp"><i class="ti-lock"></i>Kayıt Ol</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="header-bottom header-sticky">
-                    <!-- Logo -->
-                    <div class="logo d-none d-lg-block">
-                        <a href="/Home/Index"><img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/logo.png" alt=""></a>
-                    </div>
-                    <div class="container">
-                        <div class="menu-wrapper">
-                            <!-- Logo -->
-                            <div class="logo logo2 d-block d-lg-none">
-                                <a href="index.html"><img src="~/Vitrin Temaları/onlineedu-master/assets/img/logo/logo.png" alt=""></a>
-                            </div>
-                            <!-- Main-menu -->
-                            <div class="main-menu d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a href="/Home/Index">Ana Sayfa</a></li>
-                                        <li><a href="/About/Index">Hakkımızda</a></li>
-                                        <li><a href="/Course/Index">Kurslar</a></li>
-                                        <li><a href="/Teacher/Index">Eğitmenler</a></li>
-                                        <li><a href="/Blog/Index">Blog</a></li>                                
-                                        <li><a href="contact.html">İletişim</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            <!-- Header-btn -->
-                            <div class="header-search d-none d-lg-block">
-                                <form action="#" class="form-box f-right ">
-                                    <input type="text" name="Search" placeholder="Kursları Ara">
-                                    <div class="search-icon">
-                                        <i class="fas fa-search special-tag"></i>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    </header>
+</header>

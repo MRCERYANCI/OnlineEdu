@@ -7,37 +7,11 @@
                 <div class="footer-heading">
                     <div class="row justify-content-between">
                         <div class="col-xl-6 col-lg-7 col-md-10">
-                            <div class="footer-tittle2">
-                                <h4>Stay Updated</h4>
-                            </div>
+                            
                             <!-- Form -->
-                            <div class="footer-form mb-50">
-                                <div id="mc_embed_signup">
-                                    <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative mail_part" novalidate="true">
-                                        <input type="email" name="EMAIL" id="newsletter-form-email" placeholder=" Email Address " class="placeholder hide-on-focus" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'">
-                                        <div class="form-icon">
-                                            <button type="submit" name="submit" id="newsletter-submit" class="email_icon newsletter-submit button-contactForm">
-                                                Subscribe Now
-                                            </button>
-                                        </div>
-                                        <div class="mt-10 info"></div>
-                                    </form>
-                                </div>
-                            </div>
+                            @await Component.InvokeAsync("_FooterNewsLetterComponentPartial")
                         </div>
-                        <div class="col-xl-5 col-lg-5">
-                            <div class="footer-tittle2">
-                                <h4>Let’s Get Social</h4>
-                            </div>
-                            <!-- Footer Social -->
-                            <div class="footer-social">
-                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-google"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-youtube"></i></a>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("_FooterSocialMediaComponentPartial")
                     </div>
                 </div>
                 <!-- Footer Menu -->
@@ -45,13 +19,13 @@
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>About Us</h4>
+                                <h4>Hakkımızda</h4>
                                 <ul>
-                                    <li><a href="#">Online Learning</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="#">Press Center</a></li>
-                                    <li><a href="#">Become an Instructor</a></li>
+                                    <li><a href="/Course/Index">Kurslarımız</a></li>
+                                    <li><a href="/About/Index">Hakkımızda</a></li>
+                                    <li><a href="/Blog/Index">Bloglar</a></li>
+                                    <li><a href="/Teacher/Index">Eğitmenlerimiz</a></li>
+                                    <li><a href="/Contact/Index">İletişim</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -59,12 +33,12 @@
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Campus</h4>
+                                <h4>İçeriklerimiz</h4>
                                 <ul>
-                                    <li><a href="#">Our Plans</a></li>
-                                    <li><a href="#">Free Trial</a></li>
-                                    <li><a href="#">Academic Solutions</a></li>
-                                    <li><a href="#">Business Solutions</a></li>
+                                    <li><a href="#">Kurslarımız</a></li>
+                                    <li><a href="#">Ücretsiz Kurslar</a></li>
+                                    <li><a href="#">Akademik Çözümler</a></li>
+                                    <li><a href="#">İş Çözümleri</a></li>
                                     <li><a href="#"> Government Solutions</a></li>
                                 </ul>
                             </div>
@@ -73,13 +47,13 @@
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Study</h4>
+                                <h4>Çalışma Planı</h4>
                                 <ul>
-                                    <li><a href="#">Admissions Policy</a></li>
-                                    <li><a href="#">Getting Started</a></li>
-                                    <li><a href="#">Online Application</a></li>
-                                    <li><a href="#">Visa Information</a></li>
-                                    <li><a href="#">Tuition Calculator</a></li>
+                                    <li><a href="#">Kayıt Politikası</a></li>
+                                    <li><a href="#">Başlangıç Aşaması</a></li>
+                                    <li><a href="#">Online Başvuru</a></li>
+                                    <li><a href="#">Soru Cevap Etkinliği</a></li>
+                                    <li><a href="#">Ücretsiz Rehber</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -87,13 +61,13 @@
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
-                                <h4>Spport</h4>
+                                <h4>Destek</h4>
                                 <ul>
-                                    <li><a href="#">Support</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">System Requirements</a></li>
-                                    <li><a href="#">Register Activation Key</a></li>
-                                    <li><a href="#">Site feedback</a></li>
+                                    <li><a href="#">Destek</a></li>
+                                    <li><a href="/Contact/Index">İletişim</a></li>
+                                    <li><a href="#">Sistem Gereksinimleri</a></li>
+                                    <li><a href="/Register/SignUp">Ücretsiz Kaydolun</a></li>
+                                    <li><a href="#">Geri Dönütler</a></li>
                                 </ul>
                             </div>
                         </div>

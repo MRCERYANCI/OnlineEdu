@@ -1,0 +1,47 @@
+﻿@model List<ResultBlogDto>
+
+<div class="col-lg-8 mb-5 mb-lg-0">
+    <div class="blog_left_sidebar">
+        @foreach (var Blogs in Model)
+        {
+            <article class="blog_item">
+                <div class="blog_item_img">
+                    <img class="card-img rounded-0" src="~/Images/BlogImages/@Blogs.ImageUrl" alt="@Blogs.Title">
+                    <a href="/Blog/BlogDetails/@Blogs.SefUrl" class="blog_item_date">
+                        <h3>@(((DateTime)Blogs.CreatedDate).ToString("dd"))</h3>
+                        <p>@(((DateTime)Blogs.CreatedDate).ToString("MMMM"))</p>
+                    </a>
+                </div>
+                <div class="blog_details">
+                    <a class="d-inline-block" href="/Blog/BlogDetails/@Blogs.SefUrl">
+                        <h2 class="blog-head" style="color: #2d2d2d;">@Blogs.Title</h2>
+                    </a>
+                    <ul class="blog-info-link">
+                        <li><a href="/Blog/BlogDetails/@Blogs.SefUrl"><i class="fa fa-user"></i> @Blogs.BlogCategory.Name</a></li>
+                        <li><a href="/Blog/BlogDetails/@Blogs.SefUrl"><i class="fa fa-comments"></i> @Blogs.BlogComments.Count() Yorum</a></li>
+                    </ul>
+                </div>
+            </article>
+        }
+        <nav class="blog-pagination justify-content-center d-flex">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a href="#" class="page-link" aria-label="Previous">
+                        <i class="ti-angle-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a href="#" class="page-link">1</a>
+                </li>
+                <li class="page-item active">
+                    <a href="#" class="page-link">2</a>
+                </li>
+                <li class="page-item">
+                    <a href="#" class="page-link" aria-label="Next">
+                        <i class="ti-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -321,6 +321,10 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SefUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -355,6 +359,39 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                     b.HasKey("BlogCategoryId");
 
                     b.ToTable("BlogCategories");
+                });
+
+            modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.BlogComment", b =>
+                {
+                    b.Property<int>("BlogCommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogCommentId"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BlogCommentId");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("BlogComments");
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Comment", b =>
@@ -514,6 +551,39 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("CourseRegisters");
+                });
+
+            modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.CourseVideo", b =>
+                {
+                    b.Property<int>("CourseVideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseVideoId"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Thumbnails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Video")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VideoNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseVideoId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseVideos");
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Message", b =>
@@ -740,6 +810,17 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                     b.Navigation("BlogCategory");
                 });
 
+            modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.BlogComment", b =>
+                {
+                    b.HasOne("OnlineEdu.EntityLayer.Entities.Blog", "Blog")
+                        .WithMany("BlogComments")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+                });
+
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Comment", b =>
                 {
                     b.HasOne("OnlineEdu.EntityLayer.Entities.Course", "Course")
@@ -795,6 +876,17 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.CourseVideo", b =>
+                {
+                    b.HasOne("OnlineEdu.EntityLayer.Entities.Course", "Course")
+                        .WithMany("CourseVideos")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.TeacherSocialMedia", b =>
                 {
                     b.HasOne("OnlineEdu.EntityLayer.Entities.AppUser", "Teacher")
@@ -817,6 +909,11 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                     b.Navigation("TeacherSocialMedias");
                 });
 
+            modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.Blog", b =>
+                {
+                    b.Navigation("BlogComments");
+                });
+
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.BlogCategory", b =>
                 {
                     b.Navigation("Blogs");
@@ -827,6 +924,8 @@ namespace OnlineEdu.DataAccessLayer.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("CourseRegisters");
+
+                    b.Navigation("CourseVideos");
                 });
 
             modelBuilder.Entity("OnlineEdu.EntityLayer.Entities.CourseCategory", b =>

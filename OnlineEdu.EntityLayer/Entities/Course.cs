@@ -24,6 +24,7 @@ namespace OnlineEdu.EntityLayer.Entities
 
         public List<CourseRegister> CourseRegisters { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<CourseVideo> CourseVideos { get; set; }
 
     }
 }

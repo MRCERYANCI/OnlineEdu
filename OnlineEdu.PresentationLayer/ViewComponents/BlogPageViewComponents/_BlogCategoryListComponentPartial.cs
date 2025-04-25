@@ -14,6 +14,7 @@ namespace OnlineEdu.PresentationLayer.ViewComponents.BlogPageViewComponents
 
             var blogCategories = (from blogCategory in categoryList select new ResultBlogCategoryWithCountDto
             {
+                CategoryId = blogCategory.BlogCategoryId,
                 CategoryName = blogCategory.Name,
                 Count = blogCategory.Blogs.Count
             }).ToList();

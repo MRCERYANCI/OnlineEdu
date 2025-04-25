@@ -1,3 +1,5 @@
+ï»¿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineEdu.DataAccessLayer.Concrete;
@@ -7,6 +9,7 @@ using OnlineEdu.PresentationLayer.Services.MailServices;
 using OnlineEdu.PresentationLayer.Services.RoleServices;
 using OnlineEdu.PresentationLayer.Services.UserService;
 using System.Reflection;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +25,13 @@ builder.Services.AddHttpClient();
 
 builder.Services.ConfigureApplicationCookie(cfg =>
 {
-    cfg.LoginPath = "/Account/Login"; //Sisteme Giriþ Yapmadan Eriþmeye Çalýþýyorsa Bu Sayfaya Atacak
+    cfg.LoginPath = "/Account/Login"; //Sisteme GiriÅŸ Yapmadan EriÅŸmeye Ã‡alÄ±ÅŸÄ±yorsa Bu Sayfaya Atacak
     cfg.LogoutPath = "/Account/LogOut";
+    cfg.AccessDeniedPath = "/Account/AccessDenied";
+    cfg.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    cfg.SlidingExpiration = true;
 });
+
 
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<OnlineEduContext>().AddErrorDescriber<CustomErrorDescriber>().AddDefaultTokenProviders();
 
@@ -49,11 +56,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseStatusCodePagesWithReExecute("/Error/{0}");
-//app.UseExceptionHandler("/Pages/HandleError"); // Sunucu hatalarý için yönlendirme
+app.UseStatusCodePagesWithReExecute("/Error/NotFound", "?code={0}");
+//app.UseExceptionHandler("/Pages/HandleError"); // Sunucu hatalarÄ± iÃ§in yÃ¶nlendirme
 
-app.UseAuthentication(); //Sisteme Giriþ Yapmak Ýçin
-app.UseAuthorization(); //Yetkilendirme Ýçin
+app.UseAuthentication(); //Sisteme GiriÅŸ Yapmak Ä°Ã§in
+app.UseAuthorization(); //Yetkilendirme Ä°Ã§in
 
 app.MapControllerRoute(
     name: "default",

@@ -10,6 +10,6 @@ namespace OnlineEdu.DtoLayer.Dtos.SubscriberDtos
     {
         public string Email { get; set; }
         public DateTime CreatedDate { get => DateTime.Now; }
-        public bool IsActive { get => false; }
+        public bool IsActive { get; set; }
     }
 }

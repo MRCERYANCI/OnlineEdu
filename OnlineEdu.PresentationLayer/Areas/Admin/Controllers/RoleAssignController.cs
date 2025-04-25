@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class RoleAssignController(IUserService _userService, UserManager<AppUser> _userManager, RoleManager<AppRole> _roleManager) : Controller
+    public class RoleAssignController(IUserService _userService, UserManager<AppUser> _userManager, RoleManager<AppRole> _roleManager,IMapper _mapper) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -19,7 +20,20 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
             TempData["Action"] = "Kullanıcılar Listesi";
 
             var values = await _userService.GetAllUsersAsync();
-            return View(values);
+
+            var userList = (from x in values select new UsersRoleDto
+            {
+                Id = x.Id,
+                FirsName = x.FirsName,
+                LastName = x.LastName,
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                ProfileImageUrl = x.ProfileImageUrl,
+                UserName = x.UserName,
+                Roles = _userManager.GetRolesAsync(x).Result.ToList(),
+
+            }).ToList();
+            return View(userList);
         }
 
         [HttpGet]

@@ -10,7 +10,7 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController(IBlogService _genericService,IBlogService _blogService, IMapper _mapper) : ControllerBase
+    public class BlogsController(IBlogService _genericService, IBlogService _blogService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> BlogGettAll()
@@ -61,6 +61,30 @@ namespace OnlineEdu.API.Controllers
         public async Task<IActionResult> GetBlogCount()
         {
             return Ok(await _blogService.TGetBlogCount());
+        }
+
+        [HttpGet("GetBlogDetailsWithUser/{id}")]
+        public async Task<IActionResult> GetBlogDetailsWithUser(string id)
+        {
+            return Ok(_mapper.Map<ResultBlogDto>(await _blogService.TGetBlogDetailsWithUser(id)));
+        }
+
+        [HttpGet("GetBlogsByCategory/{categoryId}")]
+        public async Task<IActionResult> GetBlogsByCategory(int categoryId)
+        {
+            return Ok(_mapper.Map<List<ResultBlogDto>>(await _blogService.TGetBlogsByCategory(categoryId)));
+        }
+
+        [HttpGet("SearchBlogPosts/{query}")]
+        public async Task<IActionResult> SearchBlogPosts(string query)
+        {
+            return Ok(_mapper.Map<List<ResultBlogDto>>(await _blogService.TSearchBlogPosts(query)));
+        }
+
+        [HttpGet("GetFilteredBlogs/{blogId}")]
+        public async Task<IActionResult> GetFilteredBlogs(int blogId)
+        {
+            return Ok(_mapper.Map<UpdateBlogDto>(await _genericService.TGetFilteredAsync(x=>x.BlogId == blogId)));
         }
     }
 }

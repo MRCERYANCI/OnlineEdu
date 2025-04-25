@@ -30,5 +30,7 @@ namespace OnlineEdu.DataAccessLayer.Concrete
         public DbSet<CourseRegister> CourseRegisters { get; set; }
         public DbSet<TeacherSocialMedia> TeacherSocialMedias { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<BlogComment> BlogComments { get; set; }
+        public DbSet<CourseVideo> CourseVideos { get; set; }
     }
 }

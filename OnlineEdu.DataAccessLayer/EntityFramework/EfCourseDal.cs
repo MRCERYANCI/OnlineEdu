@@ -4,6 +4,7 @@ using OnlineEdu.DataAccessLayer.Concrete;
 using OnlineEdu.DataAccessLayer.Repositories;
 using OnlineEdu.DtoLayer.Dtos.CourseCategoryDtos;
 using OnlineEdu.DtoLayer.Dtos.CourseDtos;
+using OnlineEdu.DtoLayer.Dtos.UserDtos;
 using OnlineEdu.EntityLayer.Entities;
 using System.Linq.Expressions;
 
@@ -21,6 +22,7 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
             var courses = await _onlineEduContext.Courses
            .Include(c => c.CourseCategory)
            .Include(c => c.Comments)
+           .Include(c => c.AppUser)
            .Select(c => new ResultCourseDto
            {
                CourseId = c.CourseId,
@@ -30,6 +32,12 @@ namespace OnlineEdu.DataAccessLayer.EntityFramework
                Price = c.Price,
                ShowCase = c.ShowCase,
                Status = c.Status,
+               AppUser = new ResultUserDto
+               {
+                   Id = c.AppUser.Id,
+                   FirsName = c.AppUser.FirsName,
+                   LastName = c.AppUser.LastName
+               },
 
                CourseCategory = new ResultCourseCategoryDto
                {

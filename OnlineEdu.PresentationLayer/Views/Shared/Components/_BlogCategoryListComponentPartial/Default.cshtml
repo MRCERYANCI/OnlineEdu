@@ -6,7 +6,7 @@
         @foreach (var BlogCategoryWithCount in Model)
         {
             <li>
-                <a href="#" class="d-flex">
+                <a href="/Blog/BlogsByCategory/@BlogCategoryWithCount.CategoryId" class="d-flex">
                     <p>@BlogCategoryWithCount.CategoryName</p>
                     <p>(@BlogCategoryWithCount.Count)</p>
                 </a>

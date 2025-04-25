@@ -1,0 +1,145 @@
+﻿@model ResultBlogDto
+
+@{
+    ViewData["Title"] = "BlogDetails";
+    Layout = "~/Views/_UILayout/Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_HomePageTitleAreaComponentPartial")
+
+<section class="blog_area single-post-area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post">
+                    <div class="feature-img">
+                        <img class="img-fluid" src="~/Images/BlogImages/@Html.DisplayFor(x=>x.ImageUrl)" alt="@Html.DisplayFor(x=>x.Title)">
+                    </div>
+                    <div class="blog_details">
+                        <h2 style="color: #2d2d2d;">
+                            @Html.DisplayFor(x => x.Title)
+                        </h2>
+                        <ul class="blog-info-link mt-3 mb-4">
+                            <li><a href="#"><i class="fa fa-user"></i> @Html.DisplayFor(x => x.BlogCategory.Name)</a></li>
+                            <li><a href="#"><i class="fa fa-comments"></i> @Model.BlogComments.Count() Yorum</a></li>
+                        </ul>
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div>
+                <div class="navigation-top">
+                    <div class="d-sm-flex justify-content-between text-center">
+                        
+                        <div class="col-sm-4 text-center my-2 my-sm-0">
+                            <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
+                        </div>
+                        <ul class="social-icons">
+                            @foreach (var TeacherSocialMedias in Model.AppUser.TeacherSocialMedias)
+                            {
+                                <li><a href="@TeacherSocialMedias.Url" title="@TeacherSocialMedias.Name" target="_blank"><i class="@TeacherSocialMedias.Icon"></i></a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="navigation-area">
+                        <div class="row">
+                            @await Component.InvokeAsync("_BlogGetPreviousPostComponentPartial", new { blogId = Model.BlogId })
+                            @await Component.InvokeAsync("_BlogGetNextPostComponentPartial", new { blogId = Model.BlogId })
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-author">
+                    <div class="media align-items-center">
+                        <img src="~/Vitrin Temaları/onlineedu-master/assets/img/blog/author.png" alt="">
+                        <div class="media-body">
+                            <a href="#">
+                                <h4>@Html.DisplayFor(x => x.AppUser.FirsName) @Html.DisplayFor(x => x.AppUser.LastName)</h4>
+                            </a>
+                            <p>
+                                Second divided from form fish beast made. Every of seas all gathered use saying you're, he
+                                our dominion twon Second divided from
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="comments-area">
+                    <h4>@Model.BlogComments.Count() Yorum</h4>
+                    @foreach (var BlogComments in Model.BlogComments)
+                    {
+                        <div class="comment-list">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img src="https://r.resimlink.com/bOKoeWk.jpg" alt="@BlogComments.NameSurname">
+                                    </div>
+                                    <div class="desc">
+                                        <p class="comment">
+                                            @BlogComments.Comment
+                                        </p>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <h5>
+                                                    <a href="#">@BlogComments.NameSurname</a>
+                                                </h5>
+                                                <p class="date">@(((DateTime)BlogComments.CreatedDate).ToString("MMMM")) @(((DateTime)BlogComments.CreatedDate).ToString("dd")), @(((DateTime)BlogComments.CreatedDate).ToString("yyyy")) at  @(((DateTime)BlogComments.CreatedDate).ToString("t")) @(((DateTime)BlogComments.CreatedDate).ToString("tt"))</p>
+                                            </div>
+                                            <div class="reply-btn">
+                                                <a href="#" class="btn-reply text-uppercase">reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @await Component.InvokeAsync("_BlogCommentComponentPartial", new { blogId = Model.BlogId })
+            </div>
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    @await Component.InvokeAsync("_BlogSearchBlogPostsComponentPartial")
+
+                    @await Component.InvokeAsync("_BlogCategoryListComponentPartial")
+
+                    @await Component.InvokeAsync("_BlogRecentBlogsComponentPartial")
+
+                    @await Component.InvokeAsync("_BlogCategoryTagComponentPartial")
+                    <aside class="single_sidebar_widget instagram_feeds">
+                        <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
+                        <ul class="instagram_row flex-wrap">
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/Vitrin Temaları/onlineedu-master/assets/img/post/post_5.png" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/Vitrin Temaları/onlineedu-master/assets/img/post/post_6.png" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/Vitrin Temaları/onlineedu-master/assets/img/post/post_7.png" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/Vitrin Temaları/onlineedu-master/assets/img/post/post_8.png" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/Vitrin Temaları/onlineedu-master/assets/img/post/post_9.png" alt="">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/Vitrin Temaları/onlineedu-master/assets/img/post/post_10.png" alt="">
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
+                    @await Component.InvokeAsync("_BlogSubscriberComponentPartial")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

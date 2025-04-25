@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OnlineEdu.BusinessLayer.Abstract;
 using OnlineEdu.BusniessLayer.Abstract;
 using OnlineEdu.DtoLayer.Dtos.SubscriberDtos;
 using OnlineEdu.EntityLayer.Entities;
@@ -9,7 +10,7 @@ namespace OnlineEdu.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubscribersController(IGenericService<Subscriber> _genericService,IMapper _mapper) : ControllerBase
+    public class SubscribersController(IGenericService<Subscriber> _genericService, IMapper _mapper, ISubscriberService _subscriberService) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> SubscriberGettAll()
@@ -26,6 +27,9 @@ namespace OnlineEdu.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSubscriber(CreateSubscriberDto createSubscriberDto)
         {
+            if (await _subscriberService.TCheckNewsletterInbox(createSubscriberDto.Email))
+                return BadRequest();
+
             await _genericService.TCreateAsync(_mapper.Map<Subscriber>(createSubscriberDto));
             return Ok("Subscriber Alanı Başarıyla Eklenmiştir");
         }

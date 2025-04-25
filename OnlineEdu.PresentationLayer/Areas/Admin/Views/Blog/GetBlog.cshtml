@@ -12,8 +12,9 @@
                 <h5 class="card-title m-b-0">Blog Güncelleme Sayfası</h5>
                 <form method="post" enctype="multipart/form-data">
                     <div class="form-group m-t-20">
-                        <input type="hidden" placeholder="Lütfen Kurs Adını Giriniz" asp-for="BlogId">
-                        <input type="hidden" placeholder="Lütfen Kurs Adını Giriniz" asp-for="ImageUrl">
+                        <input type="hidden" asp-for="BlogId">
+                        <input type="hidden" asp-for="ImageUrl">
+                        <input type="hidden" asp-for="SefUrl">
                     </div>
                     <div class="form-group m-t-20">
                         <img src="~/Images/BlogImages/@Model.ImageUrl" style="width:830px;height:200px;border-radius:5px;" />
