@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
@@ -8,6 +9,7 @@ using System.Net;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class MessagesController(IGenericService<Message> _genericService,IMapper _mapper) : ControllerBase
@@ -24,6 +26,7 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<ResultMessageDto>(await _genericService.TGetByIdAsync(id)));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateMessage(CreateMessageDto createMessageDto)
         {

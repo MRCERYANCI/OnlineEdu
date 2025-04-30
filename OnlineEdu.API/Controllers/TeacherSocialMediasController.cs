@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
@@ -7,6 +8,7 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherSocialMediasController(IGenericService<TeacherSocialMedia> _genericService, IMapper _mapper) : ControllerBase

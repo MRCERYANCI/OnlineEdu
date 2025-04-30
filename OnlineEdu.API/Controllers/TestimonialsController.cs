@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
@@ -7,10 +8,12 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TestimonialsController(IGenericService<Testimonial> _genericService,IMapper _mapper): ControllerBase
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> TestimonialGettAll()
         {

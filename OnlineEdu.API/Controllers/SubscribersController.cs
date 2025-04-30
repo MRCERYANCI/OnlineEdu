@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusinessLayer.Abstract;
@@ -8,6 +9,7 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SubscribersController(IGenericService<Subscriber> _genericService, IMapper _mapper, ISubscriberService _subscriberService) : ControllerBase
@@ -24,6 +26,7 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<ResultSubscriberDto>(await _genericService.TGetByIdAsync(id)));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateSubscriber(CreateSubscriberDto createSubscriberDto)
         {

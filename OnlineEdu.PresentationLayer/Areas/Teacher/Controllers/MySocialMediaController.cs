@@ -9,13 +9,14 @@ using OnlineEdu.DtoLayer.Dtos.SocialMediaDto;
 using OnlineEdu.DtoLayer.Dtos.TeacherSocialMediaDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
+using OnlineEdu.PresentationLayer.Services.TokenServices;
 
 namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
 {
     [Authorize(Roles = "Teacher")]
     [Area("Teacher")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class MySocialMediaController(UserManager<AppUser> _userManager, IMapper _mapper) : Controller
+    public class MySocialMediaController(UserManager<AppUser> _userManager, IMapper _mapper,ITokenService _tokenService) : Controller
     {
         private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
 
@@ -26,9 +27,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 TempData["Controller"] = "Sosyal Medyalar";
                 TempData["Action"] = "Sosyal Medya Listesi";
 
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
-
-                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultTeacherSocialMediaDto>>($"TeacherSocialMedias/TeacherSocialMediaGettAll/{user.Id}");
+                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultTeacherSocialMediaDto>>($"TeacherSocialMedias/TeacherSocialMediaGettAll/{_tokenService.GetUserId}");
                 return View(values);
             }
             catch (Exception ex)
@@ -78,8 +77,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 ValidationResult validationResult = validationRules.Validate(_mapper.Map<TeacherSocialMedia>(createTeacherSocialMedia));
                 if (validationResult.IsValid)
                 {
-                    var user = await _userManager.FindByNameAsync(User.Identity.Name);
-                    createTeacherSocialMedia.TeacherId = user.Id;
+                    createTeacherSocialMedia.TeacherId = _tokenService.GetUserId;
                     await _httpClientFactory.PostAsJsonAsync("TeacherSocialMedias", createTeacherSocialMedia);
 
                     return RedirectToAction(nameof(Index));

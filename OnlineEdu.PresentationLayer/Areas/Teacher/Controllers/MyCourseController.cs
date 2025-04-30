@@ -11,6 +11,7 @@ using OnlineEdu.DtoLayer.Dtos.CourseVideoDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
 using OnlineEdu.PresentationLayer.Services;
+using OnlineEdu.PresentationLayer.Services.TokenServices;
 using System.Net.Http;
 
 namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
@@ -18,7 +19,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
     [Authorize(Roles = "Teacher")]
     [Area("Teacher")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class MyCourseController(UserManager<AppUser> _userManager,IMapper _mapper) : Controller
+    public class MyCourseController(UserManager<AppUser> _userManager, IMapper _mapper, ITokenService _tokenService) : Controller
     {
         private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
 
@@ -50,9 +51,9 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 TempData["Controller"] = "Kurslar";
                 TempData["Action"] = "Kurs Listesi";
 
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                //var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseDto>>($"Course/ListCourseWithCategoriesAndTeacher/{user.Id}");
+                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseDto>>($"Course/ListCourseWithCategoriesAndTeacher/{_tokenService.GetUserId}");
                 return View(values);
             }
             catch (Exception ex)
@@ -89,7 +90,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                         var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
                         createCourseDto.ImageUrl = FileService.FileSaveToServer(courseResim, "wwwroot/Images/CourseImages/");
-                        createCourseDto.AppUserId = user.Id;
+                        createCourseDto.AppUserId = _tokenService.GetUserId;
 
                         await _httpClientFactory.PostAsJsonAsync("Course", createCourseDto);
 
@@ -213,7 +214,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
             TempData["Controller"] = "Kurslar";
             TempData["Action"] = "Kurs Vidoları";
 
-            ViewBag.Id = id;    
+            ViewBag.Id = id;
 
             var values = await _httpClientFactory.GetFromJsonAsync<List<ResultCourseVideoDto>>($"CourseVideos/list?courseId={id}");
             return View(values);

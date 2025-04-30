@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
@@ -7,6 +8,7 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseVideosController(IGenericService<CourseVideo> _genericService_, IWebHostEnvironment _env, IMapper _mapper) : ControllerBase
@@ -65,8 +67,8 @@ namespace OnlineEdu.API.Controllers
             {
                 CourseVideoId = v.CourseVideoId,
                 CourseId = v.CourseId,
-                VideoNumber = v.VideoNumber,    
-                Title = v.Title,                    
+                VideoNumber = v.VideoNumber,
+                Title = v.Title,
                 Video = $"{Request.Scheme}://{Request.Host}/uploads/{v.Video}",
                 Thumbnails = $"{Request.Scheme}://{Request.Host}/uploads/{v.Thumbnails}"
             });

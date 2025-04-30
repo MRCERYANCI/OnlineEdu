@@ -1,16 +1,27 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using OnlineEdu.DtoLayer.Dtos.JwtDtos;
 using OnlineEdu.DtoLayer.Dtos.UserDtos;
 using OnlineEdu.EntityLayer.Entities;
+using OnlineEdu.PresentationLayer.Helpers;
+using OnlineEdu.PresentationLayer.Models;
 using OnlineEdu.PresentationLayer.Services.MailServices;
+using OnlineEdu.PresentationLayer.Services.TokenServices;
 using OnlineEdu.PresentationLayer.Services.UserService;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace OnlineEdu.PresentationLayer.Controllers
 {
-    public class AccountController(IUserService _userService, UserManager<AppUser> _userManager, IEmailSender _emailSender) : Controller
+    public class AccountController(IUserService _userService, UserManager<AppUser> _userManager, IEmailSender _emailSender,ITokenService _tokenService) : Controller
     {
-        private static readonly HttpClient client = new HttpClient();
+        private readonly HttpClient _httpClient = HttpClientInstance.CreateClient();
 
         public IActionResult Login()
         {
@@ -22,30 +33,75 @@ namespace OnlineEdu.PresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
-            var userRole = await _userService.LoginAsync(userLoginDto);
 
-            var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
+            var result = await _httpClient.PostAsJsonAsync("Accounts", userLoginDto);
+            if (!result.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Şuanda İşleminizi Gerçekleştiremiyoruz Lütfen Daha Sonra Tekrar Deneyiniz");
+                return View();
+            }
 
-            if (userRole == null)
-                ModelState.AddModelError("", "Mail veya Şifre Hatalı");
-            else if (userRole == "false")
+            var content = await result.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                ModelState.AddModelError("", "Sunucudan boş yanıt alındı.");
+                return View();
+            }
+
+            var response = JsonSerializer.Deserialize<UserResponseJwtDto>(content);
+
+            if (response.statusCode == 404)
+            {
+                ModelState.AddModelError("", response.message);
+                return View();
+            }
+
+            if (response.statusCode == 202)
             {
                 await ResendEmailConfirmation(userLoginDto.Email);
-                ModelState.AddModelError("", "Mail Adresiniz Onaylı Değildir Lütfen Mail Adresinize Gelen Linki Onaylayın");
+                ModelState.AddModelError("", response.message);
+                return View();
             }
-            else if (userRole == "Admin")
-                return RedirectToAction("Index", "About", new { area = "Admin" });
-            else if (userRole == "Teacher")
-                return RedirectToAction("Index", "MyCourse", new { area = "Teacher" });
-            else if (userRole == "Student")
-                return RedirectToAction("Index", "CourseRegister", new { area = "Student" });
 
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(response.token);
+            var claims = token.Claims.ToList();
+
+            if (response.token != null)
+            {
+                if (!string.IsNullOrEmpty(response.token))
+                {
+                    claims.Add(new Claim("Token", response.token));
+                }
+                var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
+                var authProps = new AuthenticationProperties()
+                {
+                    ExpiresUtc = response.expireDate,
+                    IsPersistent = userLoginDto.RememberMe
+                };
+
+                await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);
+
+                // Role bul
+                var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+                // Role göre yönlendir
+                if (role == "Admin")
+                {
+                    return RedirectToAction("Index", "About", new { area = "Admin" });
+                }
+                else if (role == "Teacher")
+                {
+                    return RedirectToAction("Index", "MyCourse", new { area = "Teacher" });
+                }
+            }
+
+            ModelState.AddModelError("", "Role Bilgisi Bulunamadı Lütfen Sistem Yöneticinizle İletişime Geçiniz");
             return View();
         }
 
         public async Task<IActionResult> LogOut()
         {
-            await _userService.LogoutAsync();
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
 
@@ -82,7 +138,7 @@ namespace OnlineEdu.PresentationLayer.Controllers
             return BadRequest();
         }
 
-       public IActionResult AccessDenied()
+        public IActionResult AccessDenied()
         {
             return View();
         }
@@ -100,7 +156,7 @@ namespace OnlineEdu.PresentationLayer.Controllers
             if (!ModelState.IsValid) { return View(); }
 
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
-            if(user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
             {
                 var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var confirmationLink = Url.Action("ConfirmEmail", "Account",
@@ -123,23 +179,23 @@ namespace OnlineEdu.PresentationLayer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ResetPassword(string token,string email)
+        public async Task<IActionResult> ResetPassword(string token, string email)
         {
-            if(token == null || email == null)
+            if (token == null || email == null)
                 ModelState.AddModelError("", "Geçersiz şifre sıfırlama isteği.");
 
-            var model = new ResetPasswordDto{ Token = token, Email = email };
+            var model = new ResetPasswordDto { Token = token, Email = email };
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
-            if(!ModelState.IsValid) { return View(); }
+            if (!ModelState.IsValid) { return View(); }
 
             var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
-            
-            if(user == null)
+
+            if (user == null)
                 ModelState.AddModelError("", "Geçersiz şifre sıfırlama isteği.");
 
             var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);

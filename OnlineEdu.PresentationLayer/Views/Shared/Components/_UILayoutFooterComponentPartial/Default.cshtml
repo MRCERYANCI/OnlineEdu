@@ -97,3 +97,34 @@
 <div id="back-top">
     <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<script>
+    window.addEventListener("load", function () {
+        window.cookieconsent.initialise({
+            palette: {
+                popup: { background: "#256fc8", text: "#ffffff" },
+                button: { background: "#ffffff", text: "#000000" }
+            },
+            theme: "block",
+            type: "opt-in", // Reddet seçeneğini aktif eder
+            content: {
+                message: "Bu internet sitesinde, kullanıcı deneyimini geliştirmek ve internet sitesinin verimli çalışmasını sağlamak amacıyla çerezler kullanılmaktadır.",
+                dismiss: "Tamam", // opt-in modunda sadece 'dismiss' yerine 'allow' ve 'deny' kullanılırsa daha uygun olur
+                allow: "Kabul Et",
+                deny: "Reddet",
+                link: "Ayrıntıları inceleyin",
+                href: "/cerez-politikasi"
+            },
+            onStatusChange: function (status) {
+                if (this.hasConsented()) {
+                    // Kullanıcı onayladıysa çerez oluştur
+                    document.cookie = "kullaniciOnayi=evet; path=/; max-age=31536000"; // 1 yıl
+                } else {
+                    // Kullanıcı reddettiyse çerez oluşturma
+                    document.cookie = "kullaniciOnayi=hayir; path=/; max-age=31536000";
+                }
+            }
+        });
+    });
+</script>

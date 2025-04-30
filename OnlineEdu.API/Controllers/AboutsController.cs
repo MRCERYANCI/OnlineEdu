@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusniessLayer.Abstract;
@@ -7,6 +8,7 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AboutsController(IGenericService<About> _genericService, IMapper _mapper) : ControllerBase
@@ -17,6 +19,7 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<List<ResultAboutDto>>(await _genericService.TGetAllAsync()));
         }
 
+        [AllowAnonymous]
         [HttpGet("GetFirstRecord")]
         public async Task<IActionResult> GetFirstRecord()
         {

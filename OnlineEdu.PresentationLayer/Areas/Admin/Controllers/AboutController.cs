@@ -13,9 +13,16 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class AboutController(IMapper _mapper) : Controller
+    public class AboutController : Controller
     {
-        private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
+        private readonly HttpClient _httpClientFactory;
+        private readonly IMapper _mapper;
+
+        public AboutController(IHttpClientFactory httpClientFactory, IMapper mapper)
+        {
+            _httpClientFactory = httpClientFactory.CreateClient("EduClient");
+            _mapper = mapper;
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -37,7 +44,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
         {
             try
             {
-                if(id==0 || id == null)
+                if (id == 0 || id == null)
                 {
                     return StatusCode(400);
                 }
@@ -75,7 +82,7 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
                 ValidationResult validationResult = validationRules.Validate(_mapper.Map<About>(createAboutDto));
                 if (validationResult.IsValid)
                 {
-                    if(Image1 != null && Image2 != null)
+                    if (Image1 != null && Image2 != null)
                     {
                         var newImageName = Guid.NewGuid() + ".webp";
                         var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images/AboutImages/", newImageName);

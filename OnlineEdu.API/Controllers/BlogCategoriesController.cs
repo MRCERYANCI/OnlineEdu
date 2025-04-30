@@ -9,6 +9,7 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin,Teacher")]
     [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]

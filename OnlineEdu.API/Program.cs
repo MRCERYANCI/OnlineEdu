@@ -16,6 +16,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddServiceExtensions(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<OnlineEduContext>();
 
 builder.Services.AddDbContext<OnlineEduContext>(options =>

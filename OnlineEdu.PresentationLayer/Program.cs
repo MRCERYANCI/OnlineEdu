@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineEdu.DataAccessLayer.Concrete;
@@ -7,9 +8,11 @@ using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Services;
 using OnlineEdu.PresentationLayer.Services.MailServices;
 using OnlineEdu.PresentationLayer.Services.RoleServices;
+using OnlineEdu.PresentationLayer.Services.TokenServices;
 using OnlineEdu.PresentationLayer.Services.UserService;
 using System.Reflection;
 using System.Security.Claims;
+using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,19 +21,46 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IEmailSender, EMailSender>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddHttpClient();
 
-builder.Services.ConfigureApplicationCookie(cfg =>
+builder.Services.AddHttpClient("EduClient", cfg =>
 {
-    cfg.LoginPath = "/Account/Login"; //Sisteme Giriş Yapmadan Erişmeye Çalışıyorsa Bu Sayfaya Atacak
-    cfg.LogoutPath = "/Account/LogOut";
-    cfg.AccessDeniedPath = "/Account/AccessDenied";
-    cfg.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-    cfg.SlidingExpiration = true;
+    var tokenService = builder.Services.BuildServiceProvider().GetRequiredService<ITokenService>();
+    var token = tokenService.GetUserToken;
+    cfg.BaseAddress = new Uri("https://localhost:7061/api/");
+    if(token != null)
+    {
+        cfg.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
+{
+    opt.LoginPath = "/Account/Login"; //Sisteme Giriş Yapmadan Erişmeye Çalışıyorsa Bu Sayfaya Atacak
+    opt.LogoutPath = "/Account/LogOut";
+    opt.AccessDeniedPath = "/Account/AccessDenied";
+    opt.Cookie.SameSite = SameSiteMode.Strict;
+    opt.Cookie.HttpOnly = true;
+    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    opt.Cookie.Name = "BilgiAkademisiJwt";
+});
+
+builder.Services.AddHttpContextAccessor(); // Kullanıcının bilgilerine ulaşmak için
+
+//builder.Services.ConfigureApplicationCookie(cfg =>
+//{
+//    cfg.LoginPath = "/Account/Login"; //Sisteme Giriş Yapmadan Erişmeye Çalışıyorsa Bu Sayfaya Atacak
+//    cfg.LogoutPath = "/Account/LogOut";
+//    cfg.AccessDeniedPath = "/Account/AccessDenied";
+//    cfg.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+//    cfg.SlidingExpiration = true;
+//});
+
+
+
 
 
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<OnlineEduContext>().AddErrorDescriber<CustomErrorDescriber>().AddDefaultTokenProviders();

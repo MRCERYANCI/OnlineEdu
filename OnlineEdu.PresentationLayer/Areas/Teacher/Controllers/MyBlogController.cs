@@ -10,13 +10,14 @@ using OnlineEdu.DtoLayer.Dtos.BlogDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
 using OnlineEdu.PresentationLayer.Services;
+using OnlineEdu.PresentationLayer.Services.TokenServices;
 
 namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
 {
     [Authorize(Roles = "Teacher")]
     [Area("Teacher")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class MyBlogController(UserManager<AppUser> _userManager, IMapper _mapper) : Controller
+    public class MyBlogController(UserManager<AppUser> _userManager, IMapper _mapper, ITokenService _tokenService) : Controller
     {
         private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
 
@@ -46,9 +47,9 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 TempData["Controller"] = "Blog";
                 TempData["Action"] = "Blog Listesi";
 
-                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                //var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogDto>>($"Blogs/ListBlogsWithCategoriesByUser/{user.Id}");
+                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogDto>>($"Blogs/ListBlogsWithCategoriesByUser/{_tokenService.GetUserId}");
                 return View(values);
             }
             catch (Exception ex)
@@ -103,10 +104,9 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 {
                     if (fileName is not null)
                     {
-                        var user = await _userManager.FindByNameAsync(User.Identity.Name);
                         createBlogDto.ImageUrl = FileService.FileSaveToServer(fileName, "wwwroot/Images/BlogImages/");
                         createBlogDto.Status = true;
-                        createBlogDto.AppUserId = user.Id;
+                        createBlogDto.AppUserId = _tokenService.GetUserId;
                         await _httpClientFactory.PostAsJsonAsync("Blogs", createBlogDto);
 
                         return RedirectToAction(nameof(Index));

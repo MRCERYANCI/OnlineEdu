@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineEdu.BusinessLayer.Abstract;
@@ -8,6 +9,7 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
+    [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseCategoriesController(IGenericService<CourseCategory> _genericService,ICourseCategoryService _courseCategoryService , IMapper _mapper): ControllerBase
@@ -61,12 +63,14 @@ namespace OnlineEdu.API.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpGet("RetrieveActiveCategoriesHomePage")]
         public async Task<IActionResult> RetrieveActiveCategoriesHomePage()
         {
             return Ok(_mapper.Map<List<ResultCourseCategoryDto>>(await _genericService.TGetFilteredListAsync(x => x.ShowCase == true)));
         }
 
+        [AllowAnonymous]
         [HttpGet("GetCourseCategoryCount")]
         public async Task<IActionResult> GetCourseCategoryCount()
         {

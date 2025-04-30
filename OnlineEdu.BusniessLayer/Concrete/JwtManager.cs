@@ -40,12 +40,12 @@ namespace OnlineEdu.BusinessLayer.Concrete
                 claims.Add(new Claim(ClaimTypes.Role, roles));
             }
 
-            JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(issuer: _jwtOptions.Issuer, audience: _jwtOptions.Audience, claims: claims, notBefore: DateTime.UtcNow, expires: DateTime.Now.AddMinutes(_jwtOptions.ExpireInMinutes), signingCredentials: new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256));
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(issuer: _jwtOptions.Issuer, audience: _jwtOptions.Audience, claims: claims, notBefore: DateTime.UtcNow, expires: DateTime.UtcNow.AddMinutes(_jwtOptions.ExpireInMinutes), signingCredentials: new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256));
 
             var handler = new JwtSecurityTokenHandler();
             var responseDto = new LoginResponseDto();
             responseDto.Token = handler.WriteToken(jwtSecurityToken);
-            responseDto.ExpireDate = DateTime.Now.AddMinutes(_jwtOptions.ExpireInMinutes);
+            responseDto.ExpireDate = DateTime.UtcNow.AddMinutes(_jwtOptions.ExpireInMinutes);
 
             return responseDto;
         }
