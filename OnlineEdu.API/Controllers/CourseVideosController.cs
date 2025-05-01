@@ -8,7 +8,6 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseVideosController(IGenericService<CourseVideo> _genericService_, IWebHostEnvironment _env, IMapper _mapper) : ControllerBase

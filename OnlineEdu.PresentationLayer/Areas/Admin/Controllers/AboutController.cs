@@ -13,16 +13,9 @@ namespace OnlineEdu.PresentationLayer.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class AboutController : Controller
+    public class AboutController(IMapper _mapper) : Controller
     {
-        private readonly HttpClient _httpClientFactory;
-        private readonly IMapper _mapper;
-
-        public AboutController(IHttpClientFactory httpClientFactory, IMapper mapper)
-        {
-            _httpClientFactory = httpClientFactory.CreateClient("EduClient");
-            _mapper = mapper;
-        }
+        private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
 
         public async Task<IActionResult> Index()
         {

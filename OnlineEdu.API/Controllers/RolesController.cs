@@ -11,7 +11,6 @@ using System.Data;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController(RoleManager<AppRole> _roleManager,IMapper _mapper) : ControllerBase

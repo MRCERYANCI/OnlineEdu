@@ -10,7 +10,6 @@ using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
 using OnlineEdu.PresentationLayer.Models;
 using OnlineEdu.PresentationLayer.Services.MailServices;
-using OnlineEdu.PresentationLayer.Services.TokenServices;
 using OnlineEdu.PresentationLayer.Services.UserService;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,7 +18,7 @@ using System.Text.Json;
 
 namespace OnlineEdu.PresentationLayer.Controllers
 {
-    public class AccountController(IUserService _userService, UserManager<AppUser> _userManager, IEmailSender _emailSender,ITokenService _tokenService) : Controller
+    public class AccountController(IUserService _userService, UserManager<AppUser> _userManager, IEmailSender _emailSender) : Controller
     {
         private readonly HttpClient _httpClient = HttpClientInstance.CreateClient();
 
@@ -33,75 +32,31 @@ namespace OnlineEdu.PresentationLayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginDto userLoginDto)
         {
+            var userRole = await _userService.LoginAsync(userLoginDto);
 
-            var result = await _httpClient.PostAsJsonAsync("Accounts", userLoginDto);
-            if (!result.IsSuccessStatusCode)
-            {
-                ModelState.AddModelError("", "Şuanda İşleminizi Gerçekleştiremiyoruz Lütfen Daha Sonra Tekrar Deneyiniz");
-                return View();
-            }
+            var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
 
-            var content = await result.Content.ReadAsStringAsync();
-            if (string.IsNullOrWhiteSpace(content))
-            {
-                ModelState.AddModelError("", "Sunucudan boş yanıt alındı.");
-                return View();
-            }
-
-            var response = JsonSerializer.Deserialize<UserResponseJwtDto>(content);
-
-            if (response.statusCode == 404)
-            {
-                ModelState.AddModelError("", response.message);
-                return View();
-            }
-
-            if (response.statusCode == 202)
+            if (userRole == null)
+                ModelState.AddModelError("", "Mail veya Şifre Hatalı");
+            else if (userRole == "false")
             {
                 await ResendEmailConfirmation(userLoginDto.Email);
-                ModelState.AddModelError("", response.message);
-                return View();
+                ModelState.AddModelError("", "Mail Adresiniz Onaylı Değildir Lütfen Mail Adresinize Gelen Linki Onaylayın");
             }
+            else if (userRole == "Admin")
+                return RedirectToAction("Index", "About", new { area = "Admin" });
+            else if (userRole == "Teacher")
+                return RedirectToAction("Index", "MyCourse", new { area = "Teacher" });
+            else if (userRole == "Student")
+                return RedirectToAction("Index", "CourseRegister", new { area = "Student" });
 
-            var handler = new JwtSecurityTokenHandler();
-            var token = handler.ReadJwtToken(response.token);
-            var claims = token.Claims.ToList();
-
-            if (response.token != null)
-            {
-                if (!string.IsNullOrEmpty(response.token))
-                {
-                    claims.Add(new Claim("Token", response.token));
-                }
-                var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
-                var authProps = new AuthenticationProperties()
-                {
-                    ExpiresUtc = response.expireDate,
-                    IsPersistent = userLoginDto.RememberMe
-                };
-
-                await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);
-
-                // Role bul
-                var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-                // Role göre yönlendir
-                if (role == "Admin")
-                {
-                    return RedirectToAction("Index", "About", new { area = "Admin" });
-                }
-                else if (role == "Teacher")
-                {
-                    return RedirectToAction("Index", "MyCourse", new { area = "Teacher" });
-                }
-            }
-
-            ModelState.AddModelError("", "Role Bilgisi Bulunamadı Lütfen Sistem Yöneticinizle İletişime Geçiniz");
+            ModelState.AddModelError("", "Rolünüz Olmadığı İçin Sisteme Alınamıyorsunuz Sistem Yöneticinizle İletişime Geçiniz");
             return View();
         }
 
         public async Task<IActionResult> LogOut()
         {
-            await HttpContext.SignOutAsync();
+            await _userService.LogoutAsync();
             return RedirectToAction("Login");
         }
 

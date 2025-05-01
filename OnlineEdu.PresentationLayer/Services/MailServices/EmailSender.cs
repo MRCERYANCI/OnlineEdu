@@ -8,10 +8,10 @@ namespace OnlineEdu.PresentationLayer.Services.MailServices
     {
         public async Task SendConfirmedEmailAsync(string email, string Name_Surname, string userName, string urlLink)
         {
-            string smtpServer = "mail.cokkececiyazilim.com";
+            string smtpServer = "";
             int smtpPort = 587; // 465 ise SSL gerekebilir
-            string mailFrom = "webservice-noreply@cokkececiyazilim.com";
-            string mailPassword = "199p*Xra8";
+            string mailFrom = "";
+            string mailPassword = "";
 
             string mailTo = email;
             string subject = $"Sayın {Name_Surname} Mail Onayı";
@@ -55,10 +55,10 @@ namespace OnlineEdu.PresentationLayer.Services.MailServices
 
         public async Task SendForgotPassword(string email, string urlLink, string userName, string nameSurname)
         {
-            string smtpServer = "mail.cokkececiyazilim.com";
+            string smtpServer = "";
             int smtpPort = 587; // 465 ise SSL gerekebilir
-            string mailFrom = "webservice-noreply@cokkececiyazilim.com";
-            string mailPassword = "199p*Xra8";
+            string mailFrom = "";
+            string mailPassword = "";
 
             string mailTo = email;
 

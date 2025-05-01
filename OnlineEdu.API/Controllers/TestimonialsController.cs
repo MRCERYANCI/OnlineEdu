@@ -8,12 +8,10 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TestimonialsController(IGenericService<Testimonial> _genericService,IMapper _mapper): ControllerBase
     {
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> TestimonialGettAll()
         {

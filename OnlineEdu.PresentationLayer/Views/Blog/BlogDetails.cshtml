@@ -28,7 +28,7 @@
                 </div>
                 <div class="navigation-top">
                     <div class="d-sm-flex justify-content-between text-center">
-                        
+
                         <div class="col-sm-4 text-center my-2 my-sm-0">
                             <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
                         </div>
@@ -62,33 +62,46 @@
                 </div>
                 <div class="comments-area">
                     <h4>@Model.BlogComments.Count() Yorum</h4>
-                    @foreach (var BlogComments in Model.BlogComments)
+                    @if (Model.BlogComments.Count > 0)
                     {
-                        <div class="comment-list">
-                            <div class="single-comment justify-content-between d-flex">
-                                <div class="user justify-content-between d-flex">
-                                    <div class="thumb">
-                                        <img src="https://r.resimlink.com/bOKoeWk.jpg" alt="@BlogComments.NameSurname">
-                                    </div>
-                                    <div class="desc">
-                                        <p class="comment">
-                                            @BlogComments.Comment
-                                        </p>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="d-flex align-items-center">
-                                                <h5>
-                                                    <a href="#">@BlogComments.NameSurname</a>
-                                                </h5>
-                                                <p class="date">@(((DateTime)BlogComments.CreatedDate).ToString("MMMM")) @(((DateTime)BlogComments.CreatedDate).ToString("dd")), @(((DateTime)BlogComments.CreatedDate).ToString("yyyy")) at  @(((DateTime)BlogComments.CreatedDate).ToString("t")) @(((DateTime)BlogComments.CreatedDate).ToString("tt"))</p>
-                                            </div>
-                                            <div class="reply-btn">
-                                                <a href="#" class="btn-reply text-uppercase">reply</a>
+                        @foreach (var BlogComments in Model.BlogComments)
+                        {
+                            <div class="comment-list">
+                                <div class="single-comment justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex">
+                                        <div class="thumb">
+                                            <img src="https://r.resimlink.com/bOKoeWk.jpg" alt="@BlogComments.NameSurname">
+                                        </div>
+                                        <div class="desc">
+                                            <p class="comment">
+                                                @BlogComments.Comment
+                                            </p>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex align-items-center">
+                                                    <h5>
+                                                        <a href="#">@BlogComments.NameSurname</a>
+                                                    </h5>
+                                                    <p class="date">@(((DateTime)BlogComments.CreatedDate).ToString("MMMM")) @(((DateTime)BlogComments.CreatedDate).ToString("dd")), @(((DateTime)BlogComments.CreatedDate).ToString("yyyy")) at  @(((DateTime)BlogComments.CreatedDate).ToString("t")) @(((DateTime)BlogComments.CreatedDate).ToString("tt"))</p>
+                                                </div>
+                                                <div class="reply-btn">
+                                                    <a href="#" class="btn-reply text-uppercase">reply</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        }
+                    }
+                    else
+                    {
+                        <div style="max-width: 500px; margin: 40px auto; padding: 20px; background-color: #ffecec; border: 1px solid #f5c2c7; border-radius: 12px; display: flex; align-items: center; gap: 15px; font-family: Arial, sans-serif;">
+                            <div style="font-size: 30px; color: #d9534f;">&#9888;</div> <!-- Uyarı ikonu -->
+                            <div style="color: #a94442; font-size: 18px;">
+                                 Bu Bloğa Henüz Yorum Yapılmamış
+                            </div>
                         </div>
+
                     }
                 </div>
                 @await Component.InvokeAsync("_BlogCommentComponentPartial", new { blogId = Model.BlogId })

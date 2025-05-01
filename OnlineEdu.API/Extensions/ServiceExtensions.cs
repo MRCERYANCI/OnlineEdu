@@ -30,11 +30,6 @@ namespace OnlineEdu.API.Extensions
 
             services.AddScoped<ISubscriberDal, EfSubscriberDal>();
             services.AddScoped<ISubscriberService, SubscriberManager>();
-
-            services.AddScoped<IJwtService, JwtManager>();
-
-
-            services.Configure<JwtTokenOptions>(configuration.GetSection("JwtTokenOptions"));
         }
     }
 }

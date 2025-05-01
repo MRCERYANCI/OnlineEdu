@@ -10,16 +10,42 @@ using OnlineEdu.DtoLayer.Dtos.BlogDtos;
 using OnlineEdu.EntityLayer.Entities;
 using OnlineEdu.PresentationLayer.Helpers;
 using OnlineEdu.PresentationLayer.Services;
-using OnlineEdu.PresentationLayer.Services.TokenServices;
+using System.Text.RegularExpressions;
 
 namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
 {
     [Authorize(Roles = "Teacher")]
     [Area("Teacher")]
     [Route("[area]/[controller]/[action]/{id?}")]
-    public class MyBlogController(UserManager<AppUser> _userManager, IMapper _mapper, ITokenService _tokenService) : Controller
+    public class MyBlogController(UserManager<AppUser> _userManager, IMapper _mapper) : Controller
     {
         private readonly HttpClient _httpClientFactory = HttpClientInstance.CreateClient();
+
+        public static string ToSefUrl(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return string.Empty;
+
+            // Türkçe karakterleri dönüştür
+            string normalized = text.ToLowerInvariant()
+                .Replace("ç", "c")
+                .Replace("ğ", "g")
+                .Replace("ı", "i")
+                .Replace("ö", "o")
+                .Replace("ş", "s")
+                .Replace("ü", "u");
+
+            // Alfasayısal ve boşluk dışındaki karakterleri sil
+            normalized = Regex.Replace(normalized, @"[^a-z0-9\s-]", "");
+
+            // Boşlukları tireye dönüştür
+            normalized = Regex.Replace(normalized, @"\s+", "-").Trim('-');
+
+            // Birden fazla tireyi teke indir
+            normalized = Regex.Replace(normalized, @"-+", "-");
+
+            return normalized;
+        }
 
         public async Task CategoryDropdown()
         {
@@ -47,9 +73,9 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 TempData["Controller"] = "Blog";
                 TempData["Action"] = "Blog Listesi";
 
-                //var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogDto>>($"Blogs/ListBlogsWithCategoriesByUser/{_tokenService.GetUserId}");
+                var values = await _httpClientFactory.GetFromJsonAsync<List<ResultBlogDto>>($"Blogs/ListBlogsWithCategoriesByUser/{user.Id}");
                 return View(values);
             }
             catch (Exception ex)
@@ -104,9 +130,12 @@ namespace OnlineEdu.PresentationLayer.Areas.Teacher.Controllers
                 {
                     if (fileName is not null)
                     {
+                        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
                         createBlogDto.ImageUrl = FileService.FileSaveToServer(fileName, "wwwroot/Images/BlogImages/");
                         createBlogDto.Status = true;
-                        createBlogDto.AppUserId = _tokenService.GetUserId;
+                        createBlogDto.AppUserId = user.Id;
+                        createBlogDto.SefUrl = ToSefUrl(createBlogDto.Title);
                         await _httpClientFactory.PostAsJsonAsync("Blogs", createBlogDto);
 
                         return RedirectToAction(nameof(Index));

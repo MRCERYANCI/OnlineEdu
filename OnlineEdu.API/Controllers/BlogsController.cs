@@ -9,12 +9,10 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogsController(IBlogService _genericService, IBlogService _blogService, IMapper _mapper) : ControllerBase
     {
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> BlogGettAll()
         {
@@ -54,42 +52,42 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<List<ResultBlogDto>>(await _genericService.TListBlogsWithCategoriesByUser(appUserId)));
         }
 
-        [AllowAnonymous]
+
         [HttpGet("GetLastFourBlogs")]
         public async Task<IActionResult> GetLastFourBlogs()
         {
             return Ok(_mapper.Map<List<ResultBlogDto>>(await _blogService.TGetLastFourBlogs()));
         }
 
-        [AllowAnonymous]
+ 
         [HttpGet("GetBlogCount")]
         public async Task<IActionResult> GetBlogCount()
         {
             return Ok(await _blogService.TGetBlogCount());
         }
 
-        [AllowAnonymous]
+
         [HttpGet("GetBlogDetailsWithUser/{id}")]
         public async Task<IActionResult> GetBlogDetailsWithUser(string id)
         {
             return Ok(_mapper.Map<ResultBlogDto>(await _blogService.TGetBlogDetailsWithUser(id)));
         }
 
-        [AllowAnonymous]
+
         [HttpGet("GetBlogsByCategory/{categoryId}")]
         public async Task<IActionResult> GetBlogsByCategory(int categoryId)
         {
             return Ok(_mapper.Map<List<ResultBlogDto>>(await _blogService.TGetBlogsByCategory(categoryId)));
         }
 
-        [AllowAnonymous]
+ 
         [HttpGet("SearchBlogPosts/{query}")]
         public async Task<IActionResult> SearchBlogPosts(string query)
         {
             return Ok(_mapper.Map<List<ResultBlogDto>>(await _blogService.TSearchBlogPosts(query)));
         }
 
-        [AllowAnonymous]
+
         [HttpGet("GetFilteredBlogs/{blogId}")]
         public async Task<IActionResult> GetFilteredBlogs(int blogId)
         {

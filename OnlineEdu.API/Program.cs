@@ -25,7 +25,6 @@ builder.Services.AddDbContext<OnlineEduContext>(options =>
     //options.UseLazyLoadingProxies();
 });
 
-var tokenOptions = builder.Configuration.GetSection("JwtTokenOptions").Get<JwtTokenOptions>();
 
 builder.Services.AddCors(options =>
 {
@@ -37,25 +36,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-{
-    options.RequireHttpsMetadata = true;
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidIssuer = tokenOptions.Issuer,
-        ValidAudience = tokenOptions.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.Key)),
-        ClockSkew = TimeSpan.Zero,
-        NameClaimType = ClaimTypes.Name
-    };
-});
+
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {

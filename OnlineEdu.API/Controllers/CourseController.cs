@@ -9,7 +9,6 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController(IGenericService<Course> _genericService, ICourseService _courseService, IMapper _mapper) : ControllerBase
@@ -73,27 +72,24 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<List<ResultCourseDto>>(await _courseService.TListCourseWithCategoriesAndTeacher(appUserId)));
         }
 
-        [AllowAnonymous]
         [HttpGet("GetCourseCount")]
         public async Task<IActionResult> GetCourseCount()
         {
             return Ok(await _courseService.TCountAsync());
         }
 
-        [AllowAnonymous]
         [HttpGet("GetCoursesByCategoryId/{courseId}")]
         public async Task<IActionResult> GetCoursesByCategoryId(int courseId)
         {
             return Ok(_mapper.Map<List<ResultCourseDto>>(await _courseService.TListCourseWithCategories(x=>x.CourseCategoryId == courseId && x.Status == true)));
         }
 
-        [AllowAnonymous]
         [HttpGet("GetTopSixCourses")]
         public async Task<IActionResult> GetTopSixCourses()
         {
             return Ok(await _courseService.TGetTopSixCourses());
         }
-        [AllowAnonymous]
+
         [HttpGet("GetAllCoursesForHomePage")]
         public async Task<IActionResult> GetAllCoursesForHomePage()
         {

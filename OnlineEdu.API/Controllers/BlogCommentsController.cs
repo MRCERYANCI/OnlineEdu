@@ -8,7 +8,6 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogCommentsController(IGenericService<BlogComment> _genericService, IMapper _mapper) : ControllerBase
@@ -24,8 +23,6 @@ namespace OnlineEdu.API.Controllers
         {
             return Ok(_mapper.Map<ResultBlogCommentDto>(await _genericService.TGetByIdAsync(id)));
         }
-
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateBlogComment(CreateBlogCommentDto createBlogCommentDto)
         {

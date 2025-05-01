@@ -8,7 +8,6 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherSocialMediasController(IGenericService<TeacherSocialMedia> _genericService, IMapper _mapper) : ControllerBase

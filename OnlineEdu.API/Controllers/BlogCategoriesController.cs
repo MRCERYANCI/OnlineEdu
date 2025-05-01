@@ -9,8 +9,6 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin,Teacher")]
-    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class BlogCategoriesController(IGenericService<BlogCategory> _genericService, IMapper _mapper, IBlogCategoryDal _blogCategoryDal) : ControllerBase

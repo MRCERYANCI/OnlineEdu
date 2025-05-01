@@ -8,7 +8,6 @@ using OnlineEdu.EntityLayer.Entities;
 
 namespace OnlineEdu.API.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContactsController(IGenericService<Contact> _genericService,IMapper _mapper) : ControllerBase
@@ -19,7 +18,6 @@ namespace OnlineEdu.API.Controllers
             return Ok(_mapper.Map<List<ResultContactDto>>(await _genericService.TGetAllAsync()));
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdContact(int id)
         {
